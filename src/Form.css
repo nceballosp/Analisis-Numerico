@@ -1,0 +1,9 @@
+#formulario{
+    align-self: flex-start;
+    background-color: beige;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 200px;
+    min-width: 20%;
+  }

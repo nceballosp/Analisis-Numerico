@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import Tabla from './Tabla'
+/*import Tabla from './Tabla'*/
 import Form from './Form'
 
 function App() {

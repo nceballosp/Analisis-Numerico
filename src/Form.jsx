@@ -3,15 +3,11 @@ import { useState,useEffect } from 'react'
 import './Form.css'
 
 function Form() {
-useEffect(()=>{
-  const metodo = document.querySelector('#metodo');
-  console.log(metodo);
-})
 const [eleccion,setEleccion] = useState('Biseccion');
   return (
     
     <form action="" id='formulario'>
-     <select name="metodo" id="metodo" onInput={()=>setEleccion((method)=> metodo.value)} >
+     <select name="metodo" id="metodo" onInput={()=>setEleccion(()=> metodo.value)} >
         <option value="Biseccion">Biseccion</option>
         <option value="Busquedas Incrementales">Busquedas Incrementales</option>
         <option value="Newton">Newton</option>

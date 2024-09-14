@@ -1,12 +1,30 @@
 import React from 'react'
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useRef } from 'react'
 import './Form.css'
 
 function Form() {
 const [eleccion,setEleccion] = useState('Biseccion');
+const formRef = useRef();
+const handleSubmit = () => {
+  const datos = new FormData(formRef.current);
+fetch(`http://127.0.0.1:5000/${eleccion}`,{
+  method: 'POST',
+  body: datos
+})
+.then(response => response.json())
+.then(respuesta => {
+  console.log(respuesta);
+})
+.catch(error =>
+{console.log('Fallo el fetch');  
+}
+)
+
+
+}
   return (
     
-    <form action="" id='formulario'>
+    <form action="" id='formulario' ref={formRef}>
      <select name="metodo" id="metodo" onInput={()=>setEleccion(()=> metodo.value)} >
         <option value="Biseccion">Biseccion</option>
         <option value="Regla Falsa">Regla Falsa</option>
@@ -65,6 +83,7 @@ const [eleccion,setEleccion] = useState('Biseccion');
       <input type="text" name='dff' id='dff' placeholder='dff'/>
       </>
       } */}
+      <button type='button' onClick={handleSubmit}>Enviar</button>
     </form>
     
   )

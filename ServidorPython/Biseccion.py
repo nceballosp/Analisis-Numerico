@@ -1,19 +1,8 @@
 import pandas as pd
 import numpy as np
-import math
+from SimpleWriting import *
 #import wdb
 #wdb.set_trace()
-
-# print("Xi:")
-# Xi = float(input())
-# print("Xs:")
-# Xs = float(input())
-# print("Tol:")
-# Tol = float(input())
-# print("Niter:")
-# Niter = float(input())
-# print("Function:")
-# Fun = input()
 
 def biseccion(Xi,Xs,Tol,Niter,Fun):
     fm=[]
@@ -58,13 +47,13 @@ def biseccion(Xi,Xs,Tol,Niter,Fun):
         if fe==0:
             sol=x
             state='Exact'
-            return (state,sol)
+            return {'state':state,'sol':sol}
             # print(s,"es raiz de f(x)")
             # Solucion exacta
         elif Error<Tol:
                 sol=x
                 state = 'Aprox'
-                return(state,sol,Tol,fm,E)
+                return{'state':state,'sol':sol,'Tol':Tol,'fm':fm,'E':E}
                 # print(s,"es una aproximacion de un raiz de f(x) con una tolerancia", Tol)
                 # print("Fm",fm)
                 # print("Error",E)
@@ -73,11 +62,10 @@ def biseccion(Xi,Xs,Tol,Niter,Fun):
             # Fallado
             s=x
             state='Failed'
-            return(state,Niter)
+            return {'state':state,'Niter':Niter}
             print("Fracaso en ",Niter, " iteraciones ") 
     else:
         # Invalido
         state='Invalid'
         return state
         print("El intervalo es inadecuado")
-

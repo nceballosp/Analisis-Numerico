@@ -13,10 +13,6 @@ def hello_world():
     tol = request.form.get('Tol')
     Niter = request.form.get('Niter')
     resultado = biseccion(float(Xi),float(Xf),float(tol),float(Niter),func)
-    if resultado['state'] == 'Exact':
-        return jsonify(resultado)
-    elif resultado['state'] == 'Aprox':
-        return jsonify(resultado)
-    return '202'
+    return jsonify(resultado)
 if __name__ == '__main__':
     app.run()

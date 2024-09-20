@@ -1,17 +1,22 @@
 import { useState } from 'react'
 import './App.css'
-/*import Tabla from './Tabla'*/
+import Tabla from './Tabla'
 import Form from './Form'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [datos,setDatos] = useState(null);
+  const handleData = (respuesta) => {
+    setDatos(respuesta);
+  };
 
   return (
     <>
       <h1>Proyecto Analisis Numerico</h1>
       <div className="content">
-      <Form/>
-      <div id="resultados"></div>
+      <Form imprTabla={handleData}/>
+      <div id="resultados">
+        {datos && <Tabla datos={datos}/>}
+      </div>
       </div>
     </>
   )

@@ -2,7 +2,7 @@ import React from 'react'
 import { useState,useEffect,useRef } from 'react'
 import './Form.css'
 
-function Form() {
+function Form({imprTabla}) {
 const [eleccion,setEleccion] = useState('Biseccion');
 const formRef = useRef();
 const handleSubmit = () => {
@@ -13,7 +13,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
 })
 .then(response => response.json())
 .then(respuesta => {
-  console.log(respuesta);
+  imprTabla(respuesta);
 })
 .catch(error =>
 {console.log('Fallo el fetch');  

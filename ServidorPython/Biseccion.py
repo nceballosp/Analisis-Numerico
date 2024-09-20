@@ -7,6 +7,8 @@ from SimpleWriting import *
 def biseccion(Xi,Xs,Tol,Niter,Fun):
     fm=[]
     E=[]
+    xn=[]
+    N = []
     x=Xi
     fi=eval(Fun)
     x=Xs
@@ -22,6 +24,7 @@ def biseccion(Xi,Xs,Tol,Niter,Fun):
         print(Xs, "es raiz de f(x)")
     elif fs*fi<0:
         c=0
+        N.append(c)
         Xm=(Xi+Xs)/2
         x=Xm  
         fe=eval(Fun)
@@ -30,10 +33,12 @@ def biseccion(Xi,Xs,Tol,Niter,Fun):
         while E[c]>Tol and fe!=0 and c<Niter:
             if fi*fe<0:
                 Xs=Xm
+                xn.append(Xs)
                 x=Xs
                 fs=eval(Fun)
             else:
                 Xi=Xm
+                xn.append(Xi)
                 x=Xi
                 fs=eval(Fun)
             Xa=Xm
@@ -44,20 +49,19 @@ def biseccion(Xi,Xs,Tol,Niter,Fun):
             Error=abs(Xm-Xa)
             E.append(Error)
             c=c+1
+            N.append(c)
         if fe==0:
             sol=x
             state='Exact'
-            return {'state':state,'sol':sol}
+            tabla = zip(N,xn,fm,E)
+            return {'state':state,'sol':sol,'tabla':tabla}
             # print(s,"es raiz de f(x)")
             # Solucion exacta
         elif Error<Tol:
                 sol=x
                 state = 'Aprox'
-                return{'state':state,'sol':sol,'Tol':Tol,'fm':fm,'E':E}
-                # print(s,"es una aproximacion de un raiz de f(x) con una tolerancia", Tol)
-                # print("Fm",fm)
-                # print("Error",E)
-            # Criterio Optimista
+                tabla = list(zip(N,xn,fm,E))
+                return{'state':state,'tabla':tabla,'sol':sol}
         else:
             # Fallado
             s=x

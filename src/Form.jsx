@@ -30,10 +30,11 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       <label htmlFor="metodo">Seleccione el metodo a ejecutar</label>
      <select name="metodo" id="metodo" onInput={()=>setEleccion(()=> metodo.value)} >
         <option value="Biseccion">Biseccion</option>
-        <option value="Regla Falsa">Regla Falsa</option>
-        <option value="Punto Fijo">Punto Fijo</option>
+        <option value="Regla-Falsa">Regla Falsa</option>
+        <option value="Punto-Fijo">Punto Fijo</option>
+        <option value="Secante">Secante</option>
         <option value="Newton">Newton</option>
-        <option value="Raices Multiples">Raices Multiples</option>
+        <option value="Raices-Multiples">Raices Multiples</option>
       </select>
 
       <label htmlFor="ErrorType">Tipo de Error</label>
@@ -51,33 +52,40 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       <label htmlFor="Niter">Numero de Iteraciones</label>
       <input type="text" name='Niter' id='Niter' placeholder='Niter'/>
 
-      {(eleccion==='Biseccion' || eleccion === 'Regla Falsa') &&
+      {(eleccion==='Biseccion' || eleccion === 'Regla-Falsa') &&
       <>
       <label htmlFor="Xi">Inicio de Intervalo</label>
       <input type="text" name='Xi' id='Xi' placeholder='Xi' />
       </>
       }
 
-      {(eleccion==='Biseccion' || eleccion === 'Regla Falsa') &&
+      {(eleccion==='Biseccion' || eleccion === 'Regla-Falsa') &&
       <>
       <label htmlFor="Xf">Fin de Intervalo</label>
       <input type="text" name='Xf' id='Xf' placeholder='Xf' />
       </>
       }
 
-      {eleccion==='Punto Fijo' &&
+      {eleccion==='Punto-Fijo' &&
       <>
       <label htmlFor="g">gdex</label>
       <input type="text" name='g' id='g' placeholder='g(x)'/>
       </>
       }
 
-     {(eleccion==='Punto Fijo' || eleccion==='Newton') &&
+     {(eleccion==='Punto-Fijo' || eleccion==='Newton' || eleccion === 'Secante') &&
       <>
-      <label htmlFor="X0">X inicial</label>
+      <label htmlFor="X0">X0</label>
       <input type="text" name='X0' id='X0' placeholder='X0' />
       </>
       }
+
+      {eleccion === 'Secante' &&
+      <>
+      <label htmlFor="X1">X1</label>
+      <input type="text" name='X1' id='X1' placeholder='X1' />
+      </>
+      }   
       
       {/* {(eleccion==='Newton' || eleccion==='Raices Multiples') &&
       <>

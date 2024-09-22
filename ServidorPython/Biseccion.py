@@ -4,7 +4,7 @@ from SimpleWriting import *
 #import wdb
 #wdb.set_trace()
 
-def biseccion(Xi,Xs,Tol,Niter,Fun):
+def biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType,decimales):
     fm=[]
     E=[]
     xn=[]
@@ -13,14 +13,21 @@ def biseccion(Xi,Xs,Tol,Niter,Fun):
     fi=eval(Fun)
     x=Xs
     fs=eval(Fun)
+    
 
     if fi==0:
         s=Xi
         E=0
+        state = 'Exact'
+        tabla = [(0,s,fi,E)]
+        return {'state':state,'tabla':tabla,'sol':s}
         print(Xi, "es raiz de f(x)")
     elif fs==0:
         s=Xs
         E=0
+        state = 'Exact'
+        tabla = [(0,s,fs,E)]
+        return {'state':state,'tabla':tabla,'sol':s}
         print(Xs, "es raiz de f(x)")
     elif fs*fi<0:
         c=0
@@ -46,8 +53,12 @@ def biseccion(Xi,Xs,Tol,Niter,Fun):
             x=Xm 
             fe=eval(Fun)
             fm.append(fe)
-            Error=abs(Xm-Xa)
-            E.append(Error)
+            if ErrorType == 'Abs':
+                Error=abs(Xm-Xa)
+                E.append(Error)
+            elif ErrorType == 'Rel':
+                Error = abs((Xm-Xa)/Xm)
+                E.append(Error)
             c=c+1
             N.append(c)
         if fe==0:

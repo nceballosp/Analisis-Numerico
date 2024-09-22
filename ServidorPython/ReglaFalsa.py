@@ -4,7 +4,7 @@ from SimpleWriting import *
 #import wdb
 #wdb.set_trace()
 
-def biseccion(Xi,Xs,Tol,Niter,Fun):
+def ReglaFalsa(Xi,Xs,Tol,Niter,Fun):
     fm=[]
     E=[]
     xn=[]
@@ -25,7 +25,7 @@ def biseccion(Xi,Xs,Tol,Niter,Fun):
     elif fs*fi<0:
         c=0
         N.append(c)
-        Xm=(Xi+Xs)/2
+        Xm=Xs-((fs*(Xi-Xs))/(fi-fs))
         x=Xm  
         fe=eval(Fun)
         fm.append(fe)
@@ -42,7 +42,7 @@ def biseccion(Xi,Xs,Tol,Niter,Fun):
                 x=Xi
                 fi=eval(Fun)
             Xa=Xm
-            Xm=(Xi+Xs)/2
+            Xm=Xs-((fs*(Xi-Xs))/(fi-fs))
             x=Xm 
             fe=eval(Fun)
             fm.append(fe)
@@ -73,3 +73,6 @@ def biseccion(Xi,Xs,Tol,Niter,Fun):
         state='Invalid'
         return state
         print("El intervalo es inadecuado")
+
+if __name__ == '__main__':
+    print(ReglaFalsa(1, 2, 0.0001, 100, "(x**3)+(4*(x**2))-10"))

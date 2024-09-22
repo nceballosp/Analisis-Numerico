@@ -1,7 +1,7 @@
 from flask import Flask,request,jsonify
 from Biseccion import biseccion
 from flask_cors import CORS
-
+from SimpleWriting import *
 app = Flask(__name__)
 CORS(app)
 
@@ -12,7 +12,9 @@ def hello_world():
     func = request.form.get('func')
     tol = request.form.get('Tol')
     Niter = request.form.get('Niter')
-    resultado = biseccion(float(Xi),float(Xf),float(tol),float(Niter),func)
+    ErrorType = request.form.get('ErrorType')
+    decimales = find_round_n(float(tol),ErrorType)
+    resultado = biseccion(float(Xi),float(Xf),float(tol),float(Niter),func,ErrorType,decimales)
     return jsonify(resultado)
 if __name__ == '__main__':
     app.run()

@@ -16,7 +16,9 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
   imprTabla(respuesta);
 })
 .catch(error =>
-{console.log('Fallo el fetch');  
+{
+  alert('Servidor backend no responde,revisar');
+  // console.log('Fallo el fetch');  
 }
 )
 
@@ -25,12 +27,19 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
   return (
     
     <form action="" id='formulario' ref={formRef}>
+      <label htmlFor="metodo">Seleccione el metodo a ejecutar</label>
      <select name="metodo" id="metodo" onInput={()=>setEleccion(()=> metodo.value)} >
         <option value="Biseccion">Biseccion</option>
         <option value="Regla Falsa">Regla Falsa</option>
         <option value="Punto Fijo">Punto Fijo</option>
         <option value="Newton">Newton</option>
         <option value="Raices Multiples">Raices Multiples</option>
+      </select>
+
+      <label htmlFor="ErrorType">Tipo de Error</label>
+      <select name="ErrorType" id="ErrorType">
+        <option value="Abs">Error Absoluto</option>
+        <option value="Rel">Error Relativo</option>
       </select>
 
       <label htmlFor="func">Funcion</label>

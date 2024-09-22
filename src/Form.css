@@ -10,14 +10,14 @@
     border-radius: 20px;
   }
 
-  #metodo{
+  #formulario select{
     border-radius: 20px;
     padding: 2%;
     margin-bottom: 4%;
     background-color: rgb(255, 254, 198);
   }
 
-  #func, #Tol, #Niter, #Xi, #Xf, #X0, #g {
+  #formulario input {
     border-radius: 20px;
     padding: 2%;
     border: none;

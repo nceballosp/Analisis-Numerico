@@ -34,7 +34,8 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
         <option value="Punto-Fijo">Punto Fijo</option>
         <option value="Secante">Secante</option>
         <option value="Newton">Newton</option>
-        <option value="Raices-Multiples">Raices Multiples</option>
+        <option value="Raices-Multiples-1">Raices Multiples 1</option>
+        <option value="Raices-Multiples-2">Raices Multiples 2</option>
       </select>
 
       <label htmlFor="ErrorType">Tipo de Error</label>

@@ -6,7 +6,7 @@ table{
 }
 td{
     padding: 2%;
-    min-width: 20px;
+    min-width: 3em;
 }
 th{
     background-color: #34A0A4;

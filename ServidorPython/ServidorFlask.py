@@ -40,7 +40,7 @@ def FalsaRegla():
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
     decimales = find_round_n(float(tol),ErrorType)
-    resultado = ReglaFalsa(float(Xi),float(Xf),float(tol),float(Niter),func)
+    resultado = ReglaFalsa(float(Xi),float(Xf),float(tol),float(Niter),func,decimales)
     return jsonify(resultado)
 
 if __name__ == '__main__':

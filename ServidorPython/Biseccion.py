@@ -21,14 +21,12 @@ def biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType,decimales):
         state = 'Exact'
         tabla = [(0,s,fi,E)]
         return {'state':state,'tabla':tabla,'sol':s}
-        print(Xi, "es raiz de f(x)")
     elif fs==0:
         s=Xs
         E=0
         state = 'Exact'
         tabla = [(0,s,fs,E)]
         return {'state':state,'tabla':tabla,'sol':s}
-        print(Xs, "es raiz de f(x)")
     elif fs*fi<0:
         c=0
         N.append(c)
@@ -66,7 +64,6 @@ def biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType,decimales):
             state='Exact'
             tabla = zip(N,xn,fm,E)
             return {'state':state,'sol':sol,'tabla':tabla}
-            # print(s,"es raiz de f(x)")
             # Solucion exacta
         elif Error<Tol:
                 sol=x
@@ -78,9 +75,22 @@ def biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType,decimales):
             s=x
             state='Failed'
             return {'state':state,'Niter':Niter}
-            print("Fracaso en ",Niter, " iteraciones ") 
     else:
         # Invalido
         state='Invalid'
         return state
-        print("El intervalo es inadecuado")
+if __name__ == '__main__':
+    print("X0:")
+    Xi = float(input())
+    print("X1:")
+    Xs = float(input())
+    print("Tol:")
+    Tol = float(input())
+    print("Niter:")
+    Niter = float(input())
+    print("Function:")
+    Fun = input()
+    print("Tipo de error:")
+    ErrorType = input()
+    decimales = find_round_n(Tol,ErrorType)
+    print(biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType,decimales))

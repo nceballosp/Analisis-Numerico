@@ -47,43 +47,43 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       <input type="text" name="func" id="func" placeholder='Ingrese la funcion a evaluar'/>
       
       <label htmlFor="Tol">Tolerancia</label>
-      <input type="text" name='Tol' id='Tol' placeholder='Tol'/>
+      <input autoComplete='OFF' type="text" name='Tol' id='Tol' placeholder='Tol'/>
 
       <label htmlFor="Niter">Numero de Iteraciones</label>
-      <input type="text" name='Niter' id='Niter' placeholder='Niter'/>
+      <input autoComplete='OFF' type="text" name='Niter' id='Niter' placeholder='Niter'/>
 
       {(eleccion==='Biseccion' || eleccion === 'Regla-Falsa') &&
       <>
       <label htmlFor="Xi">Inicio de Intervalo</label>
-      <input type="text" name='Xi' id='Xi' placeholder='Xi' />
+      <input autoComplete='OFF' type="text" name='Xi' id='Xi' placeholder='Xi' />
       </>
       }
 
       {(eleccion==='Biseccion' || eleccion === 'Regla-Falsa') &&
       <>
       <label htmlFor="Xf">Fin de Intervalo</label>
-      <input type="text" name='Xf' id='Xf' placeholder='Xf' />
+      <input autoComplete='OFF' type="text" name='Xf' id='Xf' placeholder='Xf' />
       </>
       }
 
       {eleccion==='Punto-Fijo' &&
       <>
       <label htmlFor="g">gdex</label>
-      <input type="text" name='g' id='g' placeholder='g(x)'/>
+      <input autoComplete='OFF' type="text" name='g' id='g' placeholder='g(x)'/>
       </>
       }
 
      {(eleccion==='Punto-Fijo' || eleccion==='Newton' || eleccion === 'Secante') &&
       <>
       <label htmlFor="X0">X0</label>
-      <input type="text" name='X0' id='X0' placeholder='X0' />
+      <input autoComplete='OFF' type="text" name='X0' id='X0' placeholder='X0' />
       </>
       }
 
       {eleccion === 'Secante' &&
       <>
       <label htmlFor="X1">X1</label>
-      <input type="text" name='X1' id='X1' placeholder='X1' />
+      <input autoComplete='OFF' type="text" name='X1' id='X1' placeholder='X1' />
       </>
       }   
       

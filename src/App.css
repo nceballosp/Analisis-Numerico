@@ -2,9 +2,14 @@
     display: flex;
     min-width: 80%;
     min-height: 50%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif; 
 }
 #resultados{
-    background-color: blue;
+    background-color: #1E6091;
     min-width: 80%;
     min-height: 500px;
     margin-left: 40px;

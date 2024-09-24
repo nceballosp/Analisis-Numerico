@@ -74,7 +74,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       </>
       }
 
-     {(eleccion==='Punto-Fijo' || eleccion==='Newton' || eleccion === 'Secante') &&
+     {(eleccion==='Punto-Fijo' || eleccion==='Newton' || eleccion === 'Secante' || eleccion === 'Raices-Multiples-1' || eleccion === 'Raices-Multiples-2') &&
       <>
       <label htmlFor="X0">X0</label>
       <input autoComplete='OFF' type="text" name='X0' id='X0' placeholder='X0' />
@@ -87,20 +87,14 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       <input autoComplete='OFF' type="text" name='X1' id='X1' placeholder='X1' />
       </>
       }   
-      
-      {/* {(eleccion==='Newton' || eleccion==='Raices Multiples') &&
+
+      {eleccion === 'Raices-Multiples-1' &&
       <>
-      <label htmlFor="df">Derivada f</label>
-      <input type="text" name='df' id='df' placeholder='df'/>
+      <label htmlFor="m">Multiplicidad</label>
+      <input autoComplete='OFF' type="text" name='m' id='m' placeholder='m' />
       </>
-      } */}
+      }   
       
-      {/* {eleccion==='Raices Multiples' && 
-      <>
-      <label htmlFor="dff">Seguna Derivada f</label>
-      <input type="text" name='dff' id='dff' placeholder='dff'/>
-      </>
-      } */}
       <button type='button' onClick={handleSubmit}>Enviar</button>
     </form>
     

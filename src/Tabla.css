@@ -10,7 +10,7 @@ td{
 }
 th{
     background-color: #34A0A4;
-    padding: 2%;
+    padding: 0.6em;
 }
 td:hover{
     border: 1px white solid;

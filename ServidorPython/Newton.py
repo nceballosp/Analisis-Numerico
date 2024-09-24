@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import sympy as sp
 import math
+from SimpleWriting import *
 #import wdb
 #wdb.set_trace()
 
@@ -16,15 +17,16 @@ import math
 # print("derivate Function df:")
 # df = input()
 
-def Newton(Fun, Tol, Niter, X0, ErrorType):
+def Newton(Fun, df,Tol, Niter, X0, ErrorType):
     fn=[]
     xn=[]
     E=[]
     N=[]
     x=X0
     f=eval(Fun)
-    y = sp.Symbol('x')
-    df= str(sp.diff(Fun,y))
+    # x = sp.Symbol('x')
+    # df= str(sp.diff(Fun,x).doit())
+    df = str(df)
     derivada= eval(df)
     x=X0
     c=0
@@ -34,7 +36,7 @@ def Newton(Fun, Tol, Niter, X0, ErrorType):
     E.append(Error)
     N.append(c)
     while Error>Tol and f!=0 and derivada!=0  and c<Niter:
-        x=x-f/derivada
+        x=x-(f/derivada)
         derivada = eval(df)
         f=eval(Fun)
         fn.append(f)
@@ -64,6 +66,6 @@ def Newton(Fun, Tol, Niter, X0, ErrorType):
 
 
 if __name__ == '__main__':
-    print(Newton("(x**3)-(2*x)+1", 0.0001, 100, -1.5))
+    print(Newton("-e(-x)+x*(-1-x)+x**(2/3)-1",'((3*x*(e(-x)))+(6*(x**2))-(2*(x**(2/3)))-(3*x))/(3*x)', 5e-6, 1000, 0.623,'Abs'))
 
 

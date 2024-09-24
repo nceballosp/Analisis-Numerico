@@ -93,7 +93,13 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       <label htmlFor="m">Multiplicidad</label>
       <input autoComplete='OFF' type="text" name='m' id='m' placeholder='m' />
       </>
-      }   
+      }
+      {eleccion === 'Newton' &&
+      <>
+      <label htmlFor="df">Df</label>
+      <input autoComplete='OFF' type="text" name='df' id='df' placeholder='df' />
+      </>
+      }
       
       <button type='button' onClick={handleSubmit}>Enviar</button>
     </form>

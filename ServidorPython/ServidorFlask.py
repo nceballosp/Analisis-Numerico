@@ -64,10 +64,11 @@ def tonnew():
     X0= request.form.get('X0')
     func = request.form.get('func')
     tol = request.form.get('Tol')
+    df = request.form.get('df')
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
     decimales = find_round_n(float(tol),ErrorType)
-    resultado = Newton(func,float(tol),float(Niter),float(X0),ErrorType)
+    resultado = Newton(func,df,float(tol),float(Niter),float(X0),ErrorType)
     return jsonify(resultado)
 
 @app.route("/Raices-Multiples-1", methods=['POST'])

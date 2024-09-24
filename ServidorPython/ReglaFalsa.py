@@ -4,7 +4,7 @@ from SimpleWriting import *
 #import wdb
 #wdb.set_trace()
 
-def ReglaFalsa(Xi,Xs,Tol,Niter,Fun):
+def ReglaFalsa(Xi,Xs,Tol,Niter,Fun,ErrorType):
     fm=[]
     E=[]
     xn=[]

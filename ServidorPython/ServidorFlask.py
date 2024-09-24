@@ -2,6 +2,7 @@ from flask import Flask,request,jsonify
 from Biseccion import biseccion
 from Secante import secante
 from ReglaFalsa import ReglaFalsa
+from Newton import Newton
 from flask_cors import CORS
 from SimpleWriting import *
 app = Flask(__name__)
@@ -28,7 +29,7 @@ def cantese():
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
     decimales = find_round_n(float(tol),ErrorType)
-    resultado = secante(float(X0),float(X1),float(tol),float(Niter),func)
+    resultado = secante(float(X0),float(X1),float(tol),float(Niter),func,ErrorType)
     return jsonify(resultado)
 
 @app.route("/Regla-Falsa", methods=['POST'])
@@ -40,8 +41,20 @@ def FalsaRegla():
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
     decimales = find_round_n(float(tol),ErrorType)
-    resultado = ReglaFalsa(float(Xi),float(Xf),float(tol),float(Niter),func)
+    resultado = ReglaFalsa(float(Xi),float(Xf),float(tol),float(Niter),func,ErrorType)
     return jsonify(resultado)
+
+@app.route("/Newton", methods=['POST'])
+def tonnew():
+    X0= request.form.get('X0')
+    func = request.form.get('func')
+    tol = request.form.get('Tol')
+    Niter = request.form.get('Niter')
+    ErrorType = request.form.get('ErrorType')
+    decimales = find_round_n(float(tol),ErrorType)
+    resultado = Newton(func,float(tol),float(Niter),float(X0),ErrorType)
+    return jsonify(resultado)
+
 
 if __name__ == '__main__':
     app.run()

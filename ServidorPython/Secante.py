@@ -4,7 +4,7 @@ from SimpleWriting import *
 #import wdb
 #wdb.set_trace()
 
-def secante(X0,X1,Tol,Niter,Fun):
+def secante(X0,X1,Tol,Niter,Fun,ErrorType):
     fn=[]
     xn=[]
     E=[]

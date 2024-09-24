@@ -45,16 +45,24 @@ def Newton(Fun, Tol, Niter, X0):
         E.append(Error)
     if f==0:
         s=x
+        state = 'Exact'
+        tabla = list(zip(N,xn,fn,E))
+        return {'state':state,'tabla':tabla}
         print(s,"es raiz de f(x)")
     elif Error<Tol:
         s=x
-        print(s,"es una aproximacion de un raiz de f(x) con una tolerancia", Tol)
-        print("N",N)
-        print("xn",xn)
-        print("fn",fn)
-        print("Error",E)
+        state = 'Aprox'
+        tabla = list(zip(N,xn,fn,E))
+        return {'state':state,'tabla':tabla}
+        # print(s,"es una aproximacion de un raiz de f(x) con una tolerancia", Tol)
+        # print("N",N)
+        # print("xn",xn)
+        # print("fn",fn)
+        # print("Error",E)
     else:
         s=x
+        state = 'Failed'
+        return {'state':state, 'Niter':Niter}
         print("Fracaso en ",Niter, " iteraciones ") 
 
 

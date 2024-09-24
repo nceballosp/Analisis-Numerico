@@ -3,6 +3,8 @@ from Biseccion import biseccion
 from Secante import secante
 from ReglaFalsa import ReglaFalsa
 from Newton import Newton
+from NewtonRaicesMultiples1 import RaicesMultiples1
+from NewtonRaicesMultiples2 import RaicesMultiples2
 from flask_cors import CORS
 from SimpleWriting import *
 app = Flask(__name__)
@@ -55,6 +57,28 @@ def tonnew():
     resultado = Newton(func,float(tol),float(Niter),float(X0),ErrorType)
     return jsonify(resultado)
 
+@app.route("/Raices-Multiples-1", methods=['POST'])
+def multiplesraices1():
+    X0= request.form.get('X0')
+    func = request.form.get('func')
+    tol = request.form.get('Tol')
+    Niter = request.form.get('Niter')
+    ErrorType = request.form.get('ErrorType')
+    m = request.form.get('m')
+    decimales = find_round_n(float(tol),ErrorType)
+    resultado = Newton(func,float(tol),float(Niter),float(X0),m,ErrorType)
+    return jsonify(resultado)
+
+@app.route("/Raices-Multiples-2", methods=['POST'])
+def multiplesraices2():
+    X0= request.form.get('X0')
+    func = request.form.get('func')
+    tol = request.form.get('Tol')
+    Niter = request.form.get('Niter')
+    ErrorType = request.form.get('ErrorType')
+    decimales = find_round_n(float(tol),ErrorType)
+    resultado = Newton(func,float(tol),float(Niter),float(X0),ErrorType)
+    return jsonify(resultado)
 
 if __name__ == '__main__':
     app.run()

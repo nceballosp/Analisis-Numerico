@@ -69,7 +69,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
 
       {eleccion==='Punto-Fijo' &&
       <>
-      <label htmlFor="g">gdex</label>
+      <label htmlFor="g">g(x)</label>
       <input autoComplete='OFF' type="text" name='g' id='g' placeholder='g(x)'/>
       </>
       }

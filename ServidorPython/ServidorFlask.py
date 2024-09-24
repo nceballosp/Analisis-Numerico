@@ -2,6 +2,7 @@ from flask import Flask,request,jsonify
 from Biseccion import biseccion
 from Secante import secante
 from ReglaFalsa import ReglaFalsa
+from PuntoFijo import PuntoFijo
 from Newton import Newton
 from NewtonRaicesMultiples1 import RaicesMultiples1
 from NewtonRaicesMultiples2 import RaicesMultiples2
@@ -46,6 +47,18 @@ def FalsaRegla():
     resultado = ReglaFalsa(float(Xi),float(Xf),float(tol),float(Niter),func,ErrorType)
     return jsonify(resultado)
 
+@app.route("/Punto-Fijo", methods=['POST'])
+def FijoPunto():
+    X0= request.form.get('X0')
+    func = request.form.get('func')
+    tol = request.form.get('Tol')
+    Niter = request.form.get('Niter')
+    ErrorType = request.form.get('ErrorType')
+    g = request.form.get('g')
+    decimales = find_round_n(float(tol),ErrorType)
+    resultado = PuntoFijo(func,float(tol),float(Niter),float(X0),g,ErrorType)
+    return jsonify(resultado)
+
 @app.route("/Newton", methods=['POST'])
 def tonnew():
     X0= request.form.get('X0')
@@ -66,7 +79,7 @@ def multiplesraices1():
     ErrorType = request.form.get('ErrorType')
     m = request.form.get('m')
     decimales = find_round_n(float(tol),ErrorType)
-    resultado = Newton(func,float(tol),float(Niter),float(X0),m,ErrorType)
+    resultado = RaicesMultiples1(func,float(tol),float(Niter),float(X0),m,ErrorType)
     return jsonify(resultado)
 
 @app.route("/Raices-Multiples-2", methods=['POST'])
@@ -77,7 +90,7 @@ def multiplesraices2():
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
     decimales = find_round_n(float(tol),ErrorType)
-    resultado = Newton(func,float(tol),float(Niter),float(X0),ErrorType)
+    resultado = RaicesMultiples2(func,float(tol),float(Niter),float(X0),ErrorType)
     return jsonify(resultado)
 
 if __name__ == '__main__':

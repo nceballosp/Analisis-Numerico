@@ -16,7 +16,7 @@ import math
 # print("derivate Function df:")
 # df = input()
 
-def Newton(Fun, Tol, Niter, X0):
+def Newton(Fun, Tol, Niter, X0, ErrorType):
     fn=[]
     xn=[]
     E=[]
@@ -40,30 +40,27 @@ def Newton(Fun, Tol, Niter, X0):
         fn.append(f)
         xn.append(x)
         c=c+1
-        Error=abs(xn[c]-xn[c-1])
+        if ErrorType=='Abs':
+            Error=abs(xn[c]-xn[c-1])
+            E.append(Error)
+        elif ErrorType == 'Rel':
+            Error = abs((xn[c]-xn[c-1])/xn[c])
+            E.append(Error)
         N.append(c)
-        E.append(Error)
     if f==0:
         s=x
         state = 'Exact'
         tabla = list(zip(N,xn,fn,E))
         return {'state':state,'tabla':tabla}
-        print(s,"es raiz de f(x)")
     elif Error<Tol:
         s=x
         state = 'Aprox'
         tabla = list(zip(N,xn,fn,E))
         return {'state':state,'tabla':tabla}
-        # print(s,"es una aproximacion de un raiz de f(x) con una tolerancia", Tol)
-        # print("N",N)
-        # print("xn",xn)
-        # print("fn",fn)
-        # print("Error",E)
     else:
         s=x
         state = 'Failed'
         return {'state':state, 'Niter':Niter}
-        print("Fracaso en ",Niter, " iteraciones ") 
 
 
 if __name__ == '__main__':

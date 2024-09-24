@@ -3,7 +3,7 @@ import numpy as np
 import sympy as sp
 import math
 
-def RaicesMultiples2(Fun, Tol, Niter, X0):
+def RaicesMultiples2(Fun, Tol, Niter, X0,ErrorType):
     fn=[]
     xn=[]
     E=[]
@@ -29,26 +29,27 @@ def RaicesMultiples2(Fun, Tol, Niter, X0):
         fn.append(f)
         xn.append(x)
         c=c+1
-        Error=abs(xn[c]-xn[c-1])
+        if ErrorType=='Abs':
+            Error=abs(xn[c]-xn[c-1])
+            E.append(Error)
+        elif ErrorType == 'Rel':
+            Error = abs((xn[c]-xn[c-1])/xn[c])
+            E.append(Error)
         N.append(c)
-        E.append(Error)
     if f==0:
         s=x
-        print(s,"es raiz de f(x)")
+        state = 'Exact'
+        tabla = list(zip(N,xn,fn,E))
+        return {'state':state,'tabla':tabla}
     elif Error<Tol:
         s=x
-        print(s,"es una aproximacion de un raiz de f(x) con una tolerancia", Tol)
-        tabla = np.array(list(zip(N,xn,fn,E)))
-        print(tabla)
-
-
-        # print("N",N)
-        # print("xn",xn)
-        # print("fn",fn)
-        # print("Error",E)
+        state = 'Aprox'
+        tabla = list(zip(N,xn,fn,E))
+        return {'state':state,'tabla':tabla}
     else:
         s=x
-        print("Fracaso en ",Niter, " iteraciones ") 
+        state = 'Failed'
+        return {'state':state, 'Niter':Niter}
 
 if __name__ == '__main__':
     (RaicesMultiples2("(x**3)-(2*x)+1", 0.0001, 100, -1.5))

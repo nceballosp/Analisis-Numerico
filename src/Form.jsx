@@ -36,6 +36,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
         <option value="Newton">Newton</option>
         <option value="Raices-Multiples-1">Raices Multiples 1</option>
         <option value="Raices-Multiples-2">Raices Multiples 2</option>
+        <option value="SOR">SOR</option>
       </select>
 
       <label htmlFor="ErrorType">Tipo de Error</label>
@@ -44,8 +45,12 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
         <option value="Rel">Error Relativo</option>
       </select>
 
-      <label htmlFor="func">Funcion</label>
-      <input type="text" name="func" id="func" placeholder='Ingrese la funcion a evaluar'/>
+      {(eleccion !== 'GaussSeidel'  && eleccion !== 'Jacobi' && eleccion !== 'SOR') && 
+        <>
+          <label htmlFor="func">Funcion</label>
+          <input type="text" name="func" id="func" placeholder="Ingrese la funcion a evaluar" />
+        </>
+      }
       
       <label htmlFor="Tol">Tolerancia</label>
       <input autoComplete='OFF' type="text" name='Tol' id='Tol' placeholder='Tol'/>
@@ -94,6 +99,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       <input autoComplete='OFF' type="text" name='m' id='m' placeholder='m' />
       </>
       }
+      
       {eleccion === 'Newton' &&
       <>
       <label htmlFor="df">Df</label>
@@ -101,6 +107,26 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       </>
       }
       
+
+      {eleccion === 'SOR' && 
+        <>
+          <label htmlFor="X0">X0</label>
+          <input autoComplete="OFF" type="text" name="X0" id="X0" placeholder="X0" />
+
+          <label htmlFor="A">A</label>
+          <input autoComplete="OFF" type="text" name="A" id="A" placeholder="A" />
+
+          <label htmlFor="b">b</label>
+          <input autoComplete="OFF" type="text" name="b" id="b" placeholder="b" />
+
+          <label htmlFor="w">w</label>
+          <input autoComplete="OFF" type="text" name="w" id="w" placeholder="w" />
+        </>
+      }
+
+
+
+
       <button type='button' onClick={handleSubmit}>Enviar</button>
     </form>
     

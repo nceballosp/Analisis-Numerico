@@ -6,6 +6,9 @@ from PuntoFijo import PuntoFijo
 from Newton import Newton
 from NewtonRaicesMultiples1 import RaicesMultiples1
 from NewtonRaicesMultiples2 import RaicesMultiples2
+
+from RelajacionSOR import SOR
+
 from flask_cors import CORS
 from SimpleWriting import *
 app = Flask(__name__)
@@ -93,6 +96,24 @@ def multiplesraices2():
     decimales = find_round_n(float(tol),ErrorType)
     resultado = RaicesMultiples2(func,float(tol),float(Niter),float(X0),ErrorType)
     return jsonify(resultado)
+
+@app.route("/SOR", methods=['POST'])
+def Sorrelajacion():
+    x0= request.form.get('X0')
+    A = request.form.get('A')
+    b = request.form.get('b')
+    w = request.form.get('w')
+    tol = request.form.get('Tol')
+    Niter = request.form.get('Niter')
+    ErrorType = request.form.get('ErrorType')
+    # Convertir a lista y asegurarte de que 'tol' y 'Niter' sean del tipo correcto
+    decimales = find_round_n(float(tol), ErrorType)
+    resultado = SOR(np.array(eval(x0)), np.array(eval(A)), np.array(eval(b)), float(w), float(tol), int(Niter), ErrorType)
+    # Convertir el resultado a una lista si es un ndarray
+    if isinstance(resultado, np.ndarray):
+        resultado = resultado.tolist() 
+    return jsonify(resultado)
+
 
 if __name__ == '__main__':
     app.run()

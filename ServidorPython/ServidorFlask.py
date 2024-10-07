@@ -114,6 +114,23 @@ def Sorrelajacion():
         resultado = resultado.tolist() 
     return jsonify(resultado)
 
+@app.route("/GaussSeidel", methods=['POST'])
+def SeidelGauss():
+    x0= request.form.get('X0')
+    A = request.form.get('A')
+    b = request.form.get('b')
+    tol = request.form.get('Tol')
+    Niter = request.form.get('Niter')
+    ErrorType = request.form.get('ErrorType')
+    w = 1
+    # Convertir a lista y asegurarte de que 'tol' y 'Niter' sean del tipo correcto
+    decimales = find_round_n(float(tol), ErrorType)
+    resultado = SOR(np.array(eval(x0)), np.array(eval(A)), np.array(eval(b)), float(w), float(tol), int(Niter), ErrorType)
+    # Convertir el resultado a una lista si es un ndarray
+    if isinstance(resultado, np.ndarray):
+        resultado = resultado.tolist()  
+    return jsonify(resultado)
+
 
 if __name__ == '__main__':
     app.run()

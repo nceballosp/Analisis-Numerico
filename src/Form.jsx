@@ -37,6 +37,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
         <option value="Raices-Multiples-1">Raices Multiples 1</option>
         <option value="Raices-Multiples-2">Raices Multiples 2</option>
         <option value="SOR">SOR</option>
+        <option value="GaussSeidel">Gauss Seidel</option>
       </select>
 
       <label htmlFor="ErrorType">Tipo de Error</label>
@@ -123,6 +124,18 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
           <input autoComplete="OFF" type="text" name="w" id="w" placeholder="w" />
         </>
       }
+
+      {eleccion === 'GaussSeidel' && 
+        <>
+          <label htmlFor="X0">X0</label>
+          <input autoComplete="OFF" type="text" name="X0" id="X0" placeholder="X0" />
+
+          <label htmlFor="A">A</label>
+          <input autoComplete="OFF" type="text" name="A" id="A" placeholder="A" />
+
+          <label htmlFor="b">b</label>
+          <input autoComplete="OFF" type="text" name="b" id="b" placeholder="b" />
+        </>}
 
 
 

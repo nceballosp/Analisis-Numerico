@@ -5,7 +5,8 @@ import Form from './Form'
 import Grafico from './Grafico';
 import Instrucciones from './Instrucciones';
 function App() {
-  var applet = useRef(null);
+  // const [currentFunc,setCurrentFunc]= useState(null);
+  const appletref = useRef(null);
   const [datos,setDatos] = useState(null);
   const handleData = (respuesta) => {
     setDatos(respuesta);
@@ -13,19 +14,31 @@ function App() {
   var params = {"appName": "graphing", "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true,"scaleContainerClass":"ggb-element" };
   var applet = new GGBApplet(params, true);
   window.addEventListener("load", function() {
-      applet.inject(applet.current);
+      applet.inject(appletref.current);
   });
+  const graphFunction = (func) => {
+
+    try{
+      if(applet && applet.getAppletObject()){
+        const ggbObject = applet.getAppletObject();
+        ggbObject.evalCommand(`f(x)=${func}`);
+      }
+    }
+    catch(error){
+      console.error("Error al graficar:", error);
+      alert("La función ingresada no es válida.");
+    }
+  }
   return (
     <>
       <h1>Proyecto Analisis Numerico</h1>
       <div className="content">
-      <Form imprTabla={handleData}/>
+      <Form imprTabla={handleData} imprGraph={graphFunction}/>
       <div id="resultados">
-        {datos && <Tabla datos={datos}/>}
+        {datos && <Tabla datos={datos} tipo={'NonLinear'}/>}
       </div>
       <Instrucciones/>
-      </div>
-        <div class="ggb-element" ref={applet}></div>
+      </div>        <div className="ggb-element" ref={appletref}></div>
     </>
   )
 }

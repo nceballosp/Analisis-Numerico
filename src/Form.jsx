@@ -2,11 +2,13 @@ import React from 'react'
 import { useState,useEffect,useRef } from 'react'
 import './Form.css'
 
-function Form({imprTabla}) {
+function Form({imprTabla,imprGraph}) {
+const funcref = useRef(null);
 const [eleccion,setEleccion] = useState('Biseccion');
 const formRef = useRef();
 const handleSubmit = () => {
   const datos = new FormData(formRef.current);
+  imprGraph(funcref.current.value);
 fetch(`http://127.0.0.1:5000/${eleccion}`,{
   method: 'POST',
   body: datos
@@ -50,7 +52,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       {(eleccion !== 'GaussSeidel'  && eleccion !== 'Jacobi' && eleccion !== 'SOR') && 
         <>
           <label htmlFor="func">Funcion</label>
-          <input type="text" name="func" id="func" placeholder="Ingrese la funcion a evaluar" />
+          <input type="text" name="func" id="func" placeholder="Ingrese la funcion a evaluar" ref={funcref} />
         </>
       }
       

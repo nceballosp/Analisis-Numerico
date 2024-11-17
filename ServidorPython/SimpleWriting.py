@@ -1,6 +1,6 @@
 import math 
 import numpy as np
-def e(expresion):
+def exp(expresion):
     return math.exp(expresion)
 def ln(expresion):
     return math.log(expresion)

@@ -126,7 +126,19 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
         </>
       }
 
-      {eleccion === 'GaussSeidel' || eleccion === 'Jacobi' && 
+      {eleccion === 'Jacobi' && 
+        <>
+          <label htmlFor="X0">X0</label>
+          <input autoComplete="OFF" type="text" name="X0" id="X0" placeholder="X0" />
+
+          <label htmlFor="A">A</label>
+          <input autoComplete="OFF" type="text" name="A" id="A" placeholder="A" />
+
+          <label htmlFor="b">b</label>
+          <input autoComplete="OFF" type="text" name="b" id="b" placeholder="b" />
+        </>}
+
+        {eleccion === 'GaussSeidel'  && 
         <>
           <label htmlFor="X0">X0</label>
           <input autoComplete="OFF" type="text" name="X0" id="X0" placeholder="X0" />

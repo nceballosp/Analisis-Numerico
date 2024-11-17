@@ -3,7 +3,14 @@ import Chart from 'chart.js/auto'
 
 function Grafico() {
   return (
-    <div>Grafico</div>
+    <iframe
+              title="GeoGebra Calculator"
+              src="https://www.geogebra.org/calculator"
+              width="100%"
+              height="100%"
+              style={{ border: '0', minHeight:'400px' }}
+              allowFullScreen
+            ></iframe>
   )
 }
 

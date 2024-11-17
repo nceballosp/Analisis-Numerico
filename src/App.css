@@ -1,6 +1,9 @@
+body{
+    min-height: max-content;
+}
 .content{
     display: flex;
-    min-width: 80%;
+    min-width: 95%;
     min-height: 50%;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -10,7 +13,27 @@ h1 {
 }
 #resultados{
     background-color: #1E6091;
-    min-width: 80%;
+    min-width: 50%;
     min-height: 500px;
     margin-left: 40px;
 }
+.subdiv{
+min-height: 50%;
+display: flex;
+align-items: stretch;
+}
+#instrucciones{
+    background-color: #1E6091;
+    min-width: 20%;
+    margin-left: 40px;
+    h2{
+        text-align: center;
+    }
+}
+.ggb-element{
+    min-height: 60vh;
+    width: 80vw;
+    margin-top: 5em;
+    margin-bottom: 10em;
+}
+

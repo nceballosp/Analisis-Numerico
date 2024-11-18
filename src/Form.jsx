@@ -2,7 +2,7 @@ import React from 'react'
 import { useState,useEffect,useRef } from 'react'
 import './Form.css'
 
-function Form({imprTabla}) {
+function Form({imprTabla, tipo}) {
 const [eleccion,setEleccion] = useState('Biseccion');
 const formRef = useRef();
 const handleSubmit = () => {
@@ -25,10 +25,11 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
 
 }
   return (
-    
     <form action="" id='formulario' ref={formRef}>
       <label htmlFor="metodo">Seleccione el metodo a ejecutar</label>
      <select name="metodo" id="metodo" onInput={()=>setEleccion(()=> metodo.value)} >
+      {tipo==='NoLinear' &&
+      <>
         <option value="Biseccion">Biseccion</option>
         <option value="Regla-Falsa">Regla Falsa</option>
         <option value="Punto-Fijo">Punto Fijo</option>
@@ -36,9 +37,17 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
         <option value="Newton">Newton</option>
         <option value="Raices-Multiples-1">Raices Multiples 1</option>
         <option value="Raices-Multiples-2">Raices Multiples 2</option>
+      </>
+      }
+
+      {tipo === 'Linear' &&
+      <>
         <option value="SOR">SOR</option>
         <option value="GaussSeidel">Gauss Seidel</option>
         <option value="Jacobi">Jacobi</option>
+      </>
+      }
+
       </select>
 
       <label htmlFor="ErrorType">Tipo de Error</label>

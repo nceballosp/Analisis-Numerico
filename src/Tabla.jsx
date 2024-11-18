@@ -18,7 +18,7 @@ function Tabla({datos,tipo}) {
   }
   return (
     <>
-    {tipo === 'NonLinear' &&
+    {tipo === 'NoLinear' &&
       <table>
       <thead>
         <tr>
@@ -49,6 +49,19 @@ function Tabla({datos,tipo}) {
       </tbody>
       </table>
       
+    }
+
+    {tipo === 'Interpolacion' &&
+      <table>
+      <thead>
+        <tr>
+        </tr>
+      </thead>
+      <tbody>
+        {tabla}
+      </tbody>
+      </table>
+
     }
     
     </>

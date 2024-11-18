@@ -4,7 +4,7 @@ import Tabla from './Tabla'
 import Form from './Form'
 import Grafico from './Grafico';
 import Instrucciones from './Instrucciones';
-function App() {
+function App({type}) {
   var applet = useRef(null);
   const [datos,setDatos] = useState(null);
   const handleData = (respuesta) => {
@@ -19,9 +19,9 @@ function App() {
     <>
       <h1>Proyecto Analisis Numerico</h1>
       <div className="content">
-      <Form imprTabla={handleData}/>
+      <Form imprTabla={handleData} tipo={type}/>
       <div id="resultados">
-        {datos && <Tabla datos={datos}/>}
+        {datos && <Tabla datos={datos} tipo={type}/>}
       </div>
       <Instrucciones/>
       </div>

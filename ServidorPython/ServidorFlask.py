@@ -157,24 +157,32 @@ def JacobiMat():
 
 @app.route("/Vandermonde", methods=['POST'])
 def mondevander():
-    x_data = request.form.get()
-    y_data = request.form.get()
+    x_data = request.form.get('x_data')
+    y_data = request.form.get('y_data')
+    resultado = vandermonde_interpolation(np.array(eval(x_data)), np.array(eval(y_data)))
+    return jsonify(resultado)
 
 @app.route("/Lagrange", methods=['POST'])
 def grangela():
-    x_data = request.form.get()
-    y_data = request.form.get()
+    x_data = request.form.get('x_data')
+    y_data = request.form.get('y_data')
+    resultado = lagrange_interpolation(np.array(eval(x_data)), np.array(eval(y_data)))
+    return jsonify(resultado)
 
 @app.route("/NewtonInter", methods=['POST'])
 def interpolationnewton():
-    x_data = request.form.get()
-    y_data = request.form.get()
+    x_data = request.form.get('x_data')
+    y_data = request.form.get('y_data')
+    resultado = newton_interpolation(np.array(eval(x_data)), np.array(eval(y_data)))
+    return jsonify(resultado)
 
 @app.route("/Spline", methods=['POST'])
 def nespli():
-    x_data = request.form.get()
-    y_data = request.form.get()
-    degree = request.form.get()
+    x_data = request.form.get('x_data')
+    y_data = request.form.get('y_data')
+    degree = request.form.get('degree')
+    resultado = spline_interpolation(np.array(eval(x_data)), np.array(eval(y_data)), float(degree))
+    return jsonify(resultado)
 
 if __name__ == '__main__':
     app.run()

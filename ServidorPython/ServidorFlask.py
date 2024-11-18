@@ -1,17 +1,24 @@
 from flask import Flask,request,jsonify
-from Biseccion import biseccion
-from Secante import secante
-from ReglaFalsa import ReglaFalsa
-from PuntoFijo import PuntoFijo
-from Newton import Newton
-from NewtonRaicesMultiples1 import RaicesMultiples1
-from NewtonRaicesMultiples2 import RaicesMultiples2
 
-from RelajacionSOR import SOR
-from Jacobi import MatJacobi
+from Capitulo1.Biseccion import biseccion
+from Capitulo1.Secante import secante
+from Capitulo1.ReglaFalsa import ReglaFalsa
+from Capitulo1.PuntoFijo import PuntoFijo
+from Capitulo1.Newton import Newton
+from Capitulo1.NewtonRaicesMultiples1 import RaicesMultiples1
+from Capitulo1.NewtonRaicesMultiples2 import RaicesMultiples2
+
+from Capitulo2.RelajacionSOR import SOR
+from Capitulo2.Jacobi import MatJacobi
+
+from Capitulo3.lagrange import lagrange_interpolation
+from Capitulo3.vandermonde import vandermonde_interpolation
+from Capitulo3.Newton_interpolation import newton_interpolation
+from Capitulo3.spline_interpolation import spline_interpolation
 
 from flask_cors import CORS
 from SimpleWriting import *
+
 app = Flask(__name__)
 CORS(app)
 
@@ -148,6 +155,26 @@ def JacobiMat():
         resultado = resultado.tolist()  
     return jsonify(resultado)
 
+@app.route("/Vandermonde", methods=['POST'])
+def mondevander():
+    x_data = request.form.get()
+    y_data = request.form.get()
+
+@app.route("/Lagrange", methods=['POST'])
+def grangela():
+    x_data = request.form.get()
+    y_data = request.form.get()
+
+@app.route("/NewtonInter", methods=['POST'])
+def interpolationnewton():
+    x_data = request.form.get()
+    y_data = request.form.get()
+
+@app.route("/Spline", methods=['POST'])
+def nespli():
+    x_data = request.form.get()
+    y_data = request.form.get()
+    degree = request.form.get()
 
 if __name__ == '__main__':
     app.run()

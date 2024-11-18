@@ -2,11 +2,13 @@ import React from 'react'
 import { useState,useEffect,useRef } from 'react'
 import './Form.css'
 
-function Form({imprTabla, tipo}) {
+function Form({imprTabla,imprGraph, tipo}) {
+const funcref = useRef(null);
 const [eleccion,setEleccion] = useState('Biseccion');
 const formRef = useRef();
 const handleSubmit = () => {
   const datos = new FormData(formRef.current);
+  imprGraph(funcref.current.value);
 fetch(`http://127.0.0.1:5000/${eleccion}`,{
   method: 'POST',
   body: datos
@@ -26,9 +28,10 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
 }
   return (
     <form action="" id='formulario' ref={formRef}>
-      <label htmlFor="metodo">Seleccione el metodo a ejecutar</label>
-     <select name="metodo" id="metodo" onInput={()=>setEleccion(()=> metodo.value)} >
-      {tipo==='NoLinear' &&
+    <label htmlFor="metodo">Seleccione el metodo a ejecutar</label>
+    <select name="metodo" id="metodo" onInput={()=>setEleccion(()=> metodo.value)} >
+
+      {tipo === 'NoLinear' &&
       <>
         <option value="Biseccion">Biseccion</option>
         <option value="Regla-Falsa">Regla Falsa</option>
@@ -48,9 +51,19 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       </>
       }
 
-      </select>
+      {tipo === 'Interpolacion' &&
+      <>
+        <option value="Vandermonde">Vandermonde</option>
+        <option value="NeitonInterpolante">Newton Interpolante</option>
+        <option value="Lagrange">Lagrange</option>
+        <option value="Spline">Spline</option>
+      </>
+      }
+
+    </select>
 
       <label htmlFor="ErrorType">Tipo de Error</label>
+      
       <select name="ErrorType" id="ErrorType">
         <option value="Abs">Error Absoluto</option>
         <option value="Rel">Error Relativo</option>
@@ -59,7 +72,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       {(eleccion !== 'GaussSeidel'  && eleccion !== 'Jacobi' && eleccion !== 'SOR') && 
         <>
           <label htmlFor="func">Funcion</label>
-          <input type="text" name="func" id="func" placeholder="Ingrese la funcion a evaluar" />
+          <input type="text" name="func" id="func" placeholder="Ingrese la funcion a evaluar" ref={funcref} />
         </>
       }
       
@@ -135,7 +148,19 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
         </>
       }
 
-      {eleccion === 'GaussSeidel' || eleccion === 'Jacobi' && 
+      {eleccion === 'Jacobi' && 
+        <>
+          <label htmlFor="X0">X0</label>
+          <input autoComplete="OFF" type="text" name="X0" id="X0" placeholder="X0" />
+
+          <label htmlFor="A">A</label>
+          <input autoComplete="OFF" type="text" name="A" id="A" placeholder="A" />
+
+          <label htmlFor="b">b</label>
+          <input autoComplete="OFF" type="text" name="b" id="b" placeholder="b" />
+        </>}
+
+        {eleccion === 'GaussSeidel'  && 
         <>
           <label htmlFor="X0">X0</label>
           <input autoComplete="OFF" type="text" name="X0" id="X0" placeholder="X0" />

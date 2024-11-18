@@ -61,26 +61,32 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       }
 
     </select>
+      {(tipo !== "Interpolacion") && 
+        <>
+        <label htmlFor="ErrorType">Tipo de Error</label>
+        
+        <select name="ErrorType" id="ErrorType">
+          <option value="Abs">Error Absoluto</option>
+          <option value="Rel">Error Relativo</option>
+        </select>
+        
 
-      <label htmlFor="ErrorType">Tipo de Error</label>
-      
-      <select name="ErrorType" id="ErrorType">
-        <option value="Abs">Error Absoluto</option>
-        <option value="Rel">Error Relativo</option>
-      </select>
+        <label htmlFor="Tol">Tolerancia</label>
+        <input autoComplete='OFF' type="text" name='Tol' id='Tol' placeholder='Tol'/>
 
-      {(eleccion !== 'GaussSeidel'  && eleccion !== 'Jacobi' && eleccion !== 'SOR') && 
+        <label htmlFor="Niter">Numero de Iteraciones</label>
+        <input autoComplete='OFF' type="text" name='Niter' id='Niter' placeholder='Niter'/>
+        </>
+      }
+
+      {(tipo == "NoLinear") && 
         <>
           <label htmlFor="func">Funcion</label>
           <input type="text" name="func" id="func" placeholder="Ingrese la funcion a evaluar" ref={funcref} />
         </>
       }
       
-      <label htmlFor="Tol">Tolerancia</label>
-      <input autoComplete='OFF' type="text" name='Tol' id='Tol' placeholder='Tol'/>
-
-      <label htmlFor="Niter">Numero de Iteraciones</label>
-      <input autoComplete='OFF' type="text" name='Niter' id='Niter' placeholder='Niter'/>
+    
 
       {(eleccion==='Biseccion' || eleccion === 'Regla-Falsa') &&
       <>
@@ -172,9 +178,21 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
           <input autoComplete="OFF" type="text" name="b" id="b" placeholder="b" />
         </>}
 
+        {tipo === 'Interpolacion'  && 
+        <>
+          <label htmlFor="x_data">x_data</label>
+          <input autoComplete="OFF" type="text" name="x_data" id="x_data" placeholder="x_data" />
 
+          <label htmlFor="y_data">y_data</label>
+          <input autoComplete="OFF" type="text" name="y_data" id="y_data" placeholder="y_data" />
+        </>}
+        
 
-
+        {eleccion === 'Spline'  && 
+        <>
+          <label htmlFor="degree">degree</label>
+          <input autoComplete="OFF" type="text" name="degree" id="degree" placeholder="Grado" />
+          </>}
       <button type='button' onClick={handleSubmit}>Enviar</button>
     </form>
     

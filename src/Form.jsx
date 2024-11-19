@@ -8,7 +8,9 @@ const [eleccion,setEleccion] = useState('Biseccion');
 const formRef = useRef();
 const handleSubmit = () => {
   const datos = new FormData(formRef.current);
-  imprGraph(funcref.current.value);
+  if(tipo === 'NoLinear'){
+    imprGraph(funcref.current.value);
+  }
 fetch(`http://127.0.0.1:5000/${eleccion}`,{
   method: 'POST',
   body: datos

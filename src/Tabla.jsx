@@ -2,9 +2,19 @@ import React from 'react'
 import './Tabla.css'
 
 function Tabla({datos,tipo}) {
-  let tabla
+  let tabla;
+  let headers;
   if (datos.state === 'Exact' || datos.state === 'Aprox'){
-    tabla = datos.tabla.map(data=><tr key={data[0]}><td>{data[0]}</td><td>{data[1]}</td><td>{data[2]}</td><td>{data[3]}</td></tr>);
+    tabla = datos.tabla.map((fila,filaindex)=><tr key={filaindex}>{fila.map((celda,celdaindex)=><td key={celdaindex}>{celda}</td>)}</tr>);
+    if(tipo === 'Linear'){
+      let columnas = [<th key={0}>E</th>];
+      for(let i=0;i<datos.tabla[0]?.length-2||0;i++){
+        columnas.push(<th key={i+1}>X{i}</th>);
+      };
+      let ultkey = columnas.length;
+      columnas.push(<th key={ultkey+1}>N</th>);
+      headers= <tr>{columnas}</tr>
+    }
   }
   else if(datos.state === 'Failed'){
     return (<>
@@ -16,6 +26,7 @@ function Tabla({datos,tipo}) {
       <div>Inputs invalidos por favor revisar</div>
       </>)
   }
+    
   return (
     <>
     {tipo === 'NoLinear' &&
@@ -38,11 +49,7 @@ function Tabla({datos,tipo}) {
     {tipo === 'Linear' &&
       <table>
       <thead>
-        <tr>
-        <th>n</th>
-        <th>X</th>
-        <th>E</th>
-        </tr>
+        {headers}
       </thead>
       <tbody>
         {tabla}

@@ -16,9 +16,9 @@ function App({type}) {
   const params = {"appName": "graphing", "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true,"scaleContainerClass":"ggb-element" };
   const applet = new GGBApplet(params, true);
   
-  // window.addEventListener("load", function() {
-  //     applet.inject(appletref.current);
-  // });
+  window.addEventListener("load", function() {
+      applet.inject(appletref.current);
+  });
 
   useEffect(() => {
     if (appletref.current) {

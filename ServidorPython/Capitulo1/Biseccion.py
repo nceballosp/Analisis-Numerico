@@ -9,6 +9,8 @@ def biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType):
     E=[]
     xn=[]
     N = []
+    x=(Xs+Xi)/2
+    faa=eval(Fun)
     x=Xi
     fi=eval(Fun)
     x=Xs
@@ -20,6 +22,12 @@ def biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType):
         E=0
         state = 'Exact'
         tabla = [(0,s,fi,E)]
+        return {'state':state,'tabla':tabla,'sol':s}}
+    elif faa == 0:
+        s=(Xs+Xi)/2
+        E=0
+        state = 'Exact'
+        tabla = [(0,s,faa,E)]
         return {'state':state,'tabla':tabla,'sol':s}
     elif fs==0:
         s=Xs

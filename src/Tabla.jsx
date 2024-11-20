@@ -1,7 +1,7 @@
 import React from 'react'
 import './Tabla.css'
 
-function Tabla({datos,tipo}) {
+function Tabla({datos,tipo,metodo}) {
   let tabla;
   let headers;
   if (datos.state === 'Exact' || datos.state === 'Aprox'){
@@ -58,10 +58,16 @@ function Tabla({datos,tipo}) {
       
     }
 
-    {tipo === 'Interpolacion' &&
+    {(tipo === 'Interpolacion' && metodo === 'Vandermonde') &&
       <table>
       <thead>
         <tr>
+          <th>
+            Grado
+          </th>
+          <th>
+            Polinomio
+          </th>
         </tr>
       </thead>
       <tbody>

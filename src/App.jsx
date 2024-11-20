@@ -41,7 +41,6 @@ function App({type}) {
   }
   return (
     <>
-      <h1>Proyecto Analisis Numerico</h1>
       <div className="content">
       <Form imprTabla={handleData} imprGraph={graphFunction} tipo={type} />
       <div id="resultados">

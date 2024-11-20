@@ -6,11 +6,9 @@ body{
     min-width: 95%;
     min-height: 50%;
     font-family: Arial, Helvetica, sans-serif;
+    margin-top: 1.7em;
 }
 
-h1 {
-    font-family: Arial, Helvetica, sans-serif; 
-}
 #resultados{
     background-color: #1E6091;
     min-width: 50%;

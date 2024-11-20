@@ -2,6 +2,13 @@ import React from 'react'
 import './Tabla.css'
 
 function Tabla({datos,tipo}) {
+  let convergencia
+  if(datos.radioEsp < 1 ){
+    convergencia = "El metodo converge";
+  }
+  else{
+    convergencia = "El metodo no converge"
+  }
   let tabla
   if (datos.state === 'Exact' || datos.state === 'Aprox'){
     tabla = datos.tabla.map(data=><tr key={data[0]}><td>{data[0]}</td><td>{data[1]}</td><td>{data[2]}</td><td>{data[3]}</td></tr>);
@@ -36,6 +43,7 @@ function Tabla({datos,tipo}) {
     }
 
     {tipo === 'Linear' &&
+    <> 
       <table>
       <thead>
         <tr>
@@ -48,7 +56,9 @@ function Tabla({datos,tipo}) {
         {tabla}
       </tbody>
       </table>
-      
+      {datos.radioEsp}
+      {convergencia}
+    </>
     }
 
     {tipo === 'Interpolacion' &&

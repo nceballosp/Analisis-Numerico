@@ -19,16 +19,16 @@ function Tabla({datos,tipo,metodo,graph}) {
     graph(datos.polynomial);
   }
   if ((datos.state === 'Exact' || datos.state === 'Aprox') && datos.tabla){
-    if(!metodo === 'Spline'){
-      tabla = datos.tabla.map((fila,filaindex)=><tr key={filaindex}>{fila.map((celda,celdaindex)=><td key={celdaindex}>{celda}</td>)}</tr>);
-    }
-    else{
+    if(metodo === 'Spline'){
       tabla = datos.tabla.map((fila,filaindex)=><tr key={filaindex}><td key={filaindex}>{filaindex}</td>{fila.map((celda,celdaindex)=><td key={celdaindex}>{celda}</td>)}</tr>);
       let columnas = [<th key={0}>i</th>];
       for(let i=1;i<datos.tabla[0]?.length+1||0;i++){
         columnas.push(<th key={i+1}>Coeff{i}</th>);
       };
       headers= <tr>{columnas}</tr>
+    }
+    else{
+      tabla = datos.tabla.map((fila,filaindex)=><tr key={filaindex}>{fila.map((celda,celdaindex)=><td key={celdaindex}>{celda}</td>)}</tr>);
     }
     if(tipo === 'Linear'){
       let columnas = [<th key={0}>n</th>];

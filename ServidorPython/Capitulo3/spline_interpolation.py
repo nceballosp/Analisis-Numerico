@@ -1,144 +1,170 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-import sympy as sp
-
-def spline_interpolation(x_data, y_data, degree):
-    """
-    Calcula los coeficientes de los polinomios de interpolación de Spline
-    de grado lineal (1) o cúbico (3) para el conjunto de n datos (x, y).
-    
-    Parámetros:
-    - x_data: Lista o array de valores x (n)
-    - y_data: Lista o array de valores y (n)
-    - degree: Grado del spline (1 para lineal, 3 para cúbico)
-    
-    Retorna:
-    - result: Diccionario con el estado y los datos del spline
-        - 'state': 'Exact' o 'Failed'
-        - 'message': Mensaje descriptivo en caso de error
-        - 'coefficients': DataFrame con los coeficientes de los polinomios (si es exitoso)
-    """
-    # Validaciones de entrada
-    n = len(x_data)
-    if n != len(y_data):
-        return {'state': 'Failed', 'message': "Los vectores x e y deben tener la misma longitud."}
-    if n < 2:
-        return {'state': 'Failed', 'message': "Se requieren al menos 2 puntos para la interpolación."}
-    if n > 8:
-        return {'state': 'Failed', 'message': "Se permiten hasta 8 datos de entrada."}
-    if len(set(x_data)) != n:
-        return {'state': 'Failed', 'message': "Los valores de x deben ser distintos entre sí."}
-    if degree not in [1, 3]:
-        return {'state': 'Failed', 'message': "El grado debe ser 1 (lineal) o 3 (cúbico)."}
-
-    # Ordenar los datos por x en caso de que no estén ordenados
-    sorted_indices = np.argsort(x_data)
-    x_data = np.array(x_data)[sorted_indices]
-    y_data = np.array(y_data)[sorted_indices]
-
+import numpy.polynomial.polynomial as poly
+# d es 1, 2 o 3 para spline lineal, cuadrado o cubico
+def spline(x, y, d):
+    if len(x) != len(y):
+        raise ValueError("x and y must be the same size")
+    if len(x) != len(set(x)):
+        raise ValueError("The x vector has duplicated items; the input isn't a function")
     try:
-        if degree == 1:
-            coefficients = linear_spline(x_data, y_data)
-        elif degree == 3:
-            coefficients = cubic_spline(x_data, y_data)
-    except np.linalg.LinAlgError:
-        return {'state': 'Failed', 'message': "La matriz es singular y no se puede invertir."}
-    except Exception as e:
-        return {'state': 'Failed', 'message': f"Error durante el cálculo del spline: {e}"}
-    
-    # Crear DataFrame para los coeficientes
-    if degree == 1:
-        df_coeff = pd.DataFrame(coefficients, columns=['Slope (m)', 'Intercept (b)'])
-    elif degree == 3:
-        df_coeff = pd.DataFrame(coefficients, columns=['a', 'b', 'c', 'd'])
-    
-    
-    # Preparar resultado
-    result = {
-        'state': 'Exact',
-        'coefficients': df_coeff
-    }
-    
-    return result
+        n = len(x)
+        A = np.zeros(((d+1) * (n-1), (d+1) * (n-1)))
+        b = np.zeros(((d+1) * (n-1), 1))
+        cua = np.power(x, 2)
+        cub = np.power(x, 3)
 
-def linear_spline(x, y):
-    """
-    Calcula los coeficientes de los splines lineales.
-    
-    Parámetros:
-    - x: Array de valores x (n)
-    - y: Array de valores y (n)
-    
-    Retorna:
-    - coefficients: Array de coeficientes [m, b] para cada intervalo
-    """
-    n = len(x)
-    A = np.zeros((2*(n-1), 2*(n-1)))
-    b_vec = np.zeros(2*(n-1))
-    
-    # Construir el sistema de ecuaciones
-    for i in range(n-1):
-        # Ecuación y = m*x + b para cada intervalo
-        A[i, 2*i] = x[i]
-        A[i, 2*i+1] = 1
-        b_vec[i] = y[i]
+        if d == 1:  # Lineal
+            A, b = construct_linear_spline(x, y, n, A, b)
+            val = np.linalg.inv(A).dot(b)
+            tabla = np.reshape(val, (n-1, d+1))
+            return {'state':'Exact','tabla':tabla.tolist()}
         
-        # Continuidad en los puntos interiores
-        if i != n-2:
-            A[n-1 + i, 2*i] = x[i+1]
-            A[n-1 + i, 2*i+1] = 1
-            b_vec[n-1 + i] = y[i+1]
-    
-    # Resolver el sistema
-    coeff = np.linalg.solve(A, b_vec)
-    
-    # Reshape para obtener [m, b] por intervalo
-    coefficients = coeff.reshape((n-1, 2))
-    
-    return coefficients
+        elif d == 2: # Square
+            A, b = construct_square_spline(x, y, n, A, b, cua)
+            val = np.linalg.inv(A).dot(b)
+            tabla = np.reshape(val, (n-1, d+1))    
+            return {'state':'Exact','tabla':tabla.tolist()}
+        
+        elif d == 3:  # Cubic
+            A, b = construct_cubic_spline(x, y, n, A, b, cua, cub)
+            val = np.linalg.inv(A).dot(b)
+            tabla = np.reshape(val, (n-1, d+1))    
+            return {'state':'Exact','tabla':tabla.tolist()}
+        
+        else: raise ValueError("Invalid 'd' option, choose 1 for linear, 2 for square and 3 for cubic")
+        
+    except np.linalg.LinAlgError as e:
+        raise ValueError("Error when trying to solve the system")
 
-def cubic_spline(x, y):
-    """
-    Calcula los coeficientes de los splines cúbicos naturales.
-    
-    Parámetros:
-    - x: Array de valores x (n)
-    - y: Array de valores y (n)
-    
-    Retorna:
-    - coefficients: Array de coeficientes [a, b, c, d] para cada intervalo
-    """
-    n = len(x)
-    h = np.diff(x)
-    
-    # Construir la matriz A y el vector b
-    A = np.zeros((n, n))
-    b_vec = np.zeros(n)
-    
-    # Condiciones de suavidad
-    A[0,0] = 1  # Natural spline: second derivative at first point is 0
-    A[-1,-1] = 1  # Natural spline: second derivative at last point is 0
-    
-    for i in range(1, n-1):
-        A[i, i-1] = h[i-1]
-        A[i, i] = 2*(h[i-1] + h[i])
-        A[i, i+1] = h[i]
-        b_vec[i] = 3*((y[i+1] - y[i])/h[i] - (y[i] - y[i-1])/h[i-1])
-    
-    # Resolver el sistema para las segundas derivadas
-    M = np.linalg.solve(A, b_vec)
-    
-    # Calcular los coeficientes de los polinomios
-    coefficients = []
+
+def construct_linear_spline(x, y, n, A, b):
+    c = 0
+    h = 0
+    for i in range(0, n-1):
+        A[i, c] = x[i]
+        A[i, c+1] = 1
+        b[i] = y[i]
+        c += 2
+        h += 1
+
+    c = 0
+    for i in range(1, n):
+        A[h, c] = x[i]
+        A[h, c+1] = 1
+        b[h] = y[i]
+        c += 2
+        h += 1
+
+    return A, b
+
+
+def construct_square_spline(x, y, n, A, b, cua):
+    c = 0
+    h = 0
     for i in range(n-1):
-        a = y[i]
-        b_coef = (y[i+1] - y[i])/h[i] - h[i]*(2*M[i] + M[i+1])/3
-        c = M[i]
-        d = (M[i+1] - M[i]) / (3*h[i])
-        coefficients.append([a, b_coef, c, d])
+        A[h, c] = cua[i]
+        A[h, c+1] = x[i]
+        A[h, c+2] = 1
+        b[h] = y[i]
+        c += 3
+        h += 1
     
-    coefficients = np.array(coefficients)
-    
-    return coefficients
+    c = 0
+    for i in range(1, n):
+        A[h, c] = cua[i]
+        A[h, c+1] = x[i]
+        A[h, c+2] = 1
+        b[h] = y[i]
+        c += 3
+        h += 1
 
+    c = 0
+    for i in range(1, n-1):
+        A[h, c] = 2*x[i]
+        A[h, c+1] = 1
+        A[h, c+3] = -2*x[i]
+        A[h, c+4] = -1
+        b[h] = 0
+        c += 3
+        h += 1
+
+    A[h, 0] = 2
+    b[h] = 0
+
+    return A, b
+
+
+def construct_cubic_spline(x, y, n, A, b, cua, cub):
+    c = 0
+    h = 0
+    for i in range(0, n - 1):
+        A[h, c] = cub[i]
+        A[h, c+1] = cua[i]
+        A[h, c+2] = x[i]
+        A[h, c+3] = 1
+        b[h] = y[i]
+        c += 4
+        h += 1
+
+    c = 0
+    for i in range(1, n):
+        A[h, c] = cub[i]
+        A[h, c+1] = cua[i]
+        A[h, c+2] = x[i]
+        A[h, c+3] = 1
+        b[h] = y[i]
+        c += 4
+        h += 1
+
+    c = 0
+    for i in range(1, n - 1):
+        A[h, c] = 3*cua[i]
+        A[h, c+1] = 2*x[i]
+        A[h, c+2] = 1
+        A[h, c+4] = -3*cua[i]
+        A[h, c+5] = -2*x[i]
+        A[h, c+6] = -1
+        b[h] = 0
+        c += 4
+        h += 1
+
+    c = 0
+    for i in range(1, n - 1):
+        A[h, c] = 6*x[i]
+        A[h, c+1] = 2
+        A[h, c+4] = -6*x[i]
+        A[h, c+5] = -2
+        b[h] = 0
+        c += 4
+        h += 1
+
+    A[h, 0] = 6*x[0]
+    A[h, 1] = 2
+    b[h] = 0
+    h += 1
+    A[h, c] = 6*x[-1]
+    A[h, c+1] = 2
+    b[h] = 0
+
+    return A, b
+
+# Retorna la lista de los polinomios
+def construct_list_polynomials(list):
+    list_f = []
+    for p in list:
+        list_f.append(poly.Polynomial(p[::-1]))
+    return list_f
+
+def poliToString(f):
+    n = len(f)
+    i = 0
+    polin = ''
+    while i < len(f):
+        if n < 2:
+            polin = polin + str(round(f[i], 4)) + 'x + '
+        else:
+            polin = polin + str(round(f[i], 4)) + 'x^'+ str(n-1) + ' + ' 
+        i = i + 1
+        n = n - 1
+    polin = polin.strip('x +')
+    return polin

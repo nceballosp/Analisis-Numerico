@@ -1,8 +1,8 @@
 import React from 'react'
 import './Tabla.css'
 
-function Tabla({datos,tipo,metodo}) {
-  let convergencia
+function Tabla({datos,tipo,metodo,graph}) {
+  let convergencia;
   if(datos.radioEsp < 1 ){
     convergencia = "El metodo converge";
   }
@@ -11,8 +11,21 @@ function Tabla({datos,tipo,metodo}) {
   }
   let tabla;
   let headers;
+  if(datos.polynomial){
+    graph(datos.polynomial);
+  }
   if ((datos.state === 'Exact' || datos.state === 'Aprox') && datos.tabla){
-    tabla = datos.tabla.map((fila,filaindex)=><tr key={filaindex}>{fila.map((celda,celdaindex)=><td key={celdaindex}>{celda}</td>)}</tr>);
+    if(!metodo === 'Spline'){
+      tabla = datos.tabla.map((fila,filaindex)=><tr key={filaindex}>{fila.map((celda,celdaindex)=><td key={celdaindex}>{celda}</td>)}</tr>);
+    }
+    else{
+      tabla = datos.tabla.map((fila,filaindex)=><tr key={filaindex}><td key={filaindex}>{filaindex}</td>{fila.map((celda,celdaindex)=><td key={celdaindex}>{celda}</td>)}</tr>);
+      let columnas = [<th key={0}>i</th>];
+      for(let i=1;i<datos.tabla[0]?.length+1||0;i++){
+        columnas.push(<th key={i+1}>Coeff{i}</th>);
+      };
+      headers= <tr>{columnas}</tr>
+    }
     if(tipo === 'Linear'){
       let columnas = [<th key={0}>n</th>];
       for(let i=1;i<datos.tabla[0]?.length-1||0;i++){
@@ -22,15 +35,6 @@ function Tabla({datos,tipo,metodo}) {
       columnas.push(<th key={ultkey+1}>E</th>);
       headers= <tr>{columnas}</tr>
     }
-    // else if(tipo === 'Interpolacion' && metodo === 'NewtonInterpolante'){
-    //   let columnas = [<th key={0}>n</th>];
-    //   columnas.push(<th key={1}>Xi</th>);
-    //   columnas.push(<th key={2}>y=F[Xi]</th>);
-    //   for(let i=0;i<datos.tabla[0]?.length-3||0;i++){
-    //     columnas.push(<th key={i+3}>{i}</th>);
-    //   };
-    //   headers= <tr>{columnas}</tr>
-    // }
   }
   else if(datos.table){
     tabla = <div dangerouslySetInnerHTML={{ __html: datos.table }}></div>
@@ -101,6 +105,16 @@ function Tabla({datos,tipo,metodo}) {
       {tabla}
       <h1>{datos.polynomial}</h1>
       </>
+    }
+    {(tipo === 'Interpolacion' && metodo === 'Spline') &&
+      <table>
+      <thead>
+        {headers}
+      </thead>
+      <tbody>
+        {tabla}
+      </tbody>
+      </table>
     }
     
     </>

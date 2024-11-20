@@ -14,7 +14,7 @@ from Capitulo2.Jacobi import MatJacobi
 from Capitulo3.lagrange import lagrange_interpolation
 from Capitulo3.vandermonde import vandermonde_interpolation
 from Capitulo3.Newton_interpolation import newton_interpolation
-from Capitulo3.spline_interpolation import spline_interpolation
+from Capitulo3.spline_interpolation import spline
 
 from flask_cors import CORS
 from SimpleWriting import *
@@ -171,8 +171,7 @@ def nespli():
     x_data = request.form.get('x_data')
     y_data = request.form.get('y_data')
     degree = request.form.get('degree')
-    resultado = spline_interpolation(np.array(eval(x_data)), np.array(eval(y_data)), float(degree))
-    print(resultado)
+    resultado = spline(np.array(eval(x_data)), np.array(eval(y_data)), int(degree))
     return jsonify(resultado)
 
 if __name__ == '__main__':

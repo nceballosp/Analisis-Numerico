@@ -47,7 +47,7 @@ function App({type}) {
       <div className="content">
       <Form imprTabla={handleData} imprGraph={graphFunction} tipo={type} setMethod={getMethod}/>
       <div id="resultados">
-        {datos && <Tabla datos={datos} tipo={type} metodo={metodo}/>}
+        {datos && <Tabla datos={datos} tipo={type} metodo={metodo} graph={graphFunction}/>}
       </div>
       <Instrucciones/>
       </div>        

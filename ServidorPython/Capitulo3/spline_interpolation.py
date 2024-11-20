@@ -2,11 +2,11 @@ import numpy as np
 import numpy.polynomial.polynomial as poly
 # d es 1, 2 o 3 para spline lineal, cuadrado o cubico
 def spline(x, y, d):
-    if len(x) != len(y):
-        return {'state':'Failed','message':"x and y must be the same size"}
-    if len(x) != len(set(x)):
-        return {'state':'Failed','message':"The x vector has duplicated items; the input isn't a function"}
     try:
+        if len(x) != len(y):
+            return {'state':'Failed','message':"x and y must be the same size"}
+        if len(x) != len(set(x)):
+            return {'state':'Failed','message':"The x vector has duplicated items; the input isn't a function"}
         n = len(x)
         A = np.zeros(((d+1) * (n-1), (d+1) * (n-1)))
         b = np.zeros(((d+1) * (n-1), 1))

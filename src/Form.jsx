@@ -21,7 +21,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
 })
 .catch(error =>
 {
-  alert('Servidor backend no responde,revisar');
+  // alert('Servidor backend no responde,revisar');
   // console.log('Fallo el fetch');  
 }
 )

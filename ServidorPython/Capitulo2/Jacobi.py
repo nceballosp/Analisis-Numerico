@@ -1,11 +1,15 @@
 import numpy as np
 
 def MatJacobi(x0, A, b, Tol, niter, error_type):
-    if len(x0) != len(A):
-        return {'state':'Failed','message':"x and y must be the same size"}
-    if np.linalg.det(A) == 0:
-         return {'state':'Failed','message':"El determinante de la matriz A no puede ser 0"}
     try:
+        if len(x0) != len(b):
+            return {'state':'Failed','message':"x and y must be the same size"}
+        if np.linalg.det(A) == 0:
+            return {'state':'Failed','message':"El determinante de la matriz A no puede ser 0"}
+        if all(len(fila) != len(A) for fila in A):
+            return {'state':'Failed','message':"La matriz debe ser cuadrada"}
+        if niter < 0 or Tol <0:
+            return {'state':'Failed','message':"La tolerancia y el numero de iteraciones debe ser positivo"}
         c = 0
         error = Tol + 1
         D = np.diag(np.diag(A))
@@ -60,7 +64,7 @@ def MatJacobi(x0, A, b, Tol, niter, error_type):
             s = x0
             state = 'Failed'
             return {'state': state, 'Niter': niter, 'radioEsp':radioEsp}
-    except np.linalg.LinAlgError as e:
+    except Exception as e:
         return {'state':'Failed','message':f"Error when trying to solve the system: {e}"}
 
 

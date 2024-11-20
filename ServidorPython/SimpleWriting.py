@@ -4,7 +4,12 @@ def exp(expresion):
     return math.exp(expresion)
 def ln(expresion):
     return math.log(expresion)
-
+def sin(expresion):
+    return math.sin(expresion)
+def cos(expresion):
+    return math.cos(expresion)
+def tan(expresion):
+    return math.tan(expresion)
         
     return decimal_count
 if __name__ == '__main__':

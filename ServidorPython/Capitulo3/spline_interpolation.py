@@ -53,8 +53,6 @@ def spline_interpolation(x_data, y_data, degree):
     elif degree == 3:
         df_coeff = pd.DataFrame(coefficients, columns=['a', 'b', 'c', 'd'])
     
-    # Generar gráfica del spline
-    plot_spline(x_data, y_data, coefficients, degree)
     
     # Preparar resultado
     result = {
@@ -144,84 +142,3 @@ def cubic_spline(x, y):
     
     return coefficients
 
-def plot_spline(x_data, y_data, coefficients, degree):
-    """
-    Grafica el spline interpolante junto con los datos.
-    
-    Parámetros:
-    - x_data: Array de valores x de los datos
-    - y_data: Array de valores y de los datos
-    - coefficients: Array de coeficientes de los splines
-    - degree: Grado del spline (1 para lineal, 3 para cúbico)
-    """
-    plt.figure(figsize=(8,6))
-    plt.scatter(x_data, y_data, color='red', label='Datos')
-    
-    for i in range(len(coefficients)):
-        if degree == 1:
-            m, b = coefficients[i]
-            y_plot = m * (x_plot := np.linspace(x_data[i], x_data[i+1], 100)) + b
-            plt.plot(x_plot, y_plot, label=f'Spline {i+1} (Lineal)')
-        elif degree == 3:
-            a, b_coef, c, d = coefficients[i]
-            x_plot = np.linspace(x_data[i], x_data[i+1], 100)
-            y_plot = a + b_coef*(x_plot - x_data[i]) + c*(x_plot - x_data[i])**2 + d*(x_plot - x_data[i])**3
-            plt.plot(x_plot, y_plot, label=f'Spline {i+1} (Cúbico)')
-    
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.title(f'Interpolación Spline {"Lineal" if degree ==1 else "Cúbico"}')
-    plt.legend()
-    plt.grid(True)
-    filename = f'spline_interpolacion_{ "lineal" if degree ==1 else "cubico" }.svg'
-    plt.savefig(filename, format='svg')
-    plt.close()
-    
-    # No se muestra el gráfico automáticamente para evitar interrupciones en la ejecución
-
-# Función principal
-if __name__ == '__main__':
-    # Explicación al usuario
-    print("Interpolación Spline")
-    print("Ingrese hasta 8 puntos de datos (x, y).")
-    print("Los valores de x deben ser distintos entre sí.")
-    print("Seleccione el grado del spline: 1 para lineal, 3 para cúbico.\n")
-    
-    try:
-        n = int(input("¿Cuántos puntos desea ingresar? (entre 2 y 8): "))
-        if n < 2 or n > 8:
-            raise ValueError("El número de puntos debe estar entre 2 y 8.")
-        
-        x_data = []
-        y_data = []
-        
-        print("\nIngrese los valores de x:")
-        for i in range(n):
-            x_val = float(input(f"x[{i+1}]: "))
-            x_data.append(x_val)
-        
-        print("\nIngrese los valores de y correspondientes:")
-        for i in range(n):
-            y_val = float(input(f"y[{i+1}]: "))
-            y_data.append(y_val)
-        
-        print("\nSeleccione el grado del spline:")
-        print("1: Lineal")
-        print("3: Cúbico")
-        degree = int(input("Ingrese el grado (1 o 3): "))
-        if degree not in [1, 3]:
-            raise ValueError("El grado debe ser 1 (lineal) o 3 (cúbico).")
-        
-        # Llamada a la función principal
-        result = spline_interpolation(x_data, y_data, degree)
-        
-        if result['state'] == 'Exact':
-            print("\nCoeficientes de los Splines:")
-            print(result['coefficients'])
-            
-            print(f"\nEl gráfico ha sido guardado como 'spline_interpolacion_{ 'lineal' if degree ==1 else 'cubico' }.svg'.")
-        else:
-            print(f"\nError: {result['message']}")
-    
-    except Exception as e:
-        print(f"\nError: {e}")

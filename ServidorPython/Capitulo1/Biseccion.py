@@ -4,7 +4,7 @@ from SimpleWriting import *
 #import wdb
 #wdb.set_trace()
 
-def biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType,decimales):
+def biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType):
     fm=[]
     E=[]
     xn=[]
@@ -92,5 +92,4 @@ if __name__ == '__main__':
     Fun = input()
     print("Tipo de error:")
     ErrorType = input()
-    decimales = find_round_n(Tol,ErrorType)
-    print(biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType,decimales))
+    print(biseccion(Xi,Xs,Tol,Niter,Fun,ErrorType))

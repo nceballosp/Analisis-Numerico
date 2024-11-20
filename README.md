@@ -1,8 +1,24 @@
-# React + Vite
+## Analisis Numerico
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Calculadora Metodos Numericos
 
-Currently, two official plugins are available:
+### Integrantes:
+- Eduardo Piñeros
+- Natalia Ceballos
+- Andres Henao
+- Andres Aristizabal
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Descripcion del proyecto
+Este proyecto se realizó con el fin de hacer una calculadora de métodos numéricos para solución de ecuaciones, lineales, no lineales y de métodos de interpolación.
+
+El backend fue implementado en python con el framework de Flask, en donde almacenamos todos los métodos requeridos para el proyecto. El frontend por su lado fue implementado con Vite + React.
+
+### Ejecucion:
+Para ejecutar el frontend, nos dirijimos a la carpeta en la que esta el proyecto y escribimos lo siguiente en la terminal:
+
+```
+npm run dev
+```
+Y para ejecutar el backend nos dirigimos al archivo ServidorFlask.py y corremos el archivo de python.
+
+Finalmente entramos a la dirección http://localhost:5173/.

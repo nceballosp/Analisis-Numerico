@@ -11,17 +11,29 @@ function Tabla({datos,tipo,metodo}) {
   }
   let tabla;
   let headers;
-  if (datos.state === 'Exact' || datos.state === 'Aprox'){
+  if ((datos.state === 'Exact' || datos.state === 'Aprox') && datos.tabla){
     tabla = datos.tabla.map((fila,filaindex)=><tr key={filaindex}>{fila.map((celda,celdaindex)=><td key={celdaindex}>{celda}</td>)}</tr>);
     if(tipo === 'Linear'){
-      let columnas = [<th key={0}>E</th>];
-      for(let i=0;i<datos.tabla[0]?.length-2||0;i++){
+      let columnas = [<th key={0}>n</th>];
+      for(let i=1;i<datos.tabla[0]?.length-1||0;i++){
         columnas.push(<th key={i+1}>X{i}</th>);
       };
       let ultkey = columnas.length;
-      columnas.push(<th key={ultkey+1}>N</th>);
+      columnas.push(<th key={ultkey+1}>E</th>);
       headers= <tr>{columnas}</tr>
     }
+    // else if(tipo === 'Interpolacion' && metodo === 'NewtonInterpolante'){
+    //   let columnas = [<th key={0}>n</th>];
+    //   columnas.push(<th key={1}>Xi</th>);
+    //   columnas.push(<th key={2}>y=F[Xi]</th>);
+    //   for(let i=0;i<datos.tabla[0]?.length-3||0;i++){
+    //     columnas.push(<th key={i+3}>{i}</th>);
+    //   };
+    //   headers= <tr>{columnas}</tr>
+    // }
+  }
+  else if(datos.table){
+    tabla = <div dangerouslySetInnerHTML={{ __html: datos.table }}></div>
   }
   else if(datos.state === 'Failed'){
     return (<>
@@ -74,22 +86,21 @@ function Tabla({datos,tipo,metodo}) {
     }
 
     {(tipo === 'Interpolacion' && metodo === 'Vandermonde') &&
+    <>
       <table>
-      <thead>
-        <tr>
-          <th>
-            Grado
-          </th>
-          <th>
-            Polinomio
-          </th>
-        </tr>
-      </thead>
       <tbody>
         {tabla}
       </tbody>
       </table>
-
+      <h1>{datos.coefficients}</h1>
+      <h1>{datos.polynomial}</h1>
+      </>
+    }
+    {(tipo === 'Interpolacion' && (metodo === 'NewtonInterpolante' || metodo === 'Lagrange')) &&
+    <>
+      {tabla}
+      <h1>{datos.polynomial}</h1>
+      </>
     }
     
     </>

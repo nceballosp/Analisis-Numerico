@@ -58,7 +58,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       {tipo === 'Interpolacion' &&
       <>
         <option value="Vandermonde">Vandermonde</option>
-        <option value="NeitonInterpolante">Newton Interpolante</option>
+        <option value="NewtonInterpolante">Newton Interpolante</option>
         <option value="Lagrange">Lagrange</option>
         <option value="Spline">Spline</option>
       </>

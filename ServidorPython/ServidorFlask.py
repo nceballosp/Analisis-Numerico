@@ -30,8 +30,7 @@ def seccionbi():
     tol = request.form.get('Tol')
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
-    decimales = find_round_n(float(tol),ErrorType)
-    resultado = biseccion(float(Xi),float(Xf),float(tol),float(Niter),func,ErrorType,decimales)
+    resultado = biseccion(float(Xi),float(Xf),float(tol),float(Niter),func,ErrorType)
     return jsonify(resultado)
 
 @app.route("/Secante", methods=['POST'])
@@ -42,7 +41,6 @@ def cantese():
     tol = request.form.get('Tol')
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
-    decimales = find_round_n(float(tol),ErrorType)
     resultado = secante(float(X0),float(X1),float(tol),float(Niter),func,ErrorType)
     return jsonify(resultado)
 
@@ -54,7 +52,6 @@ def FalsaRegla():
     tol = request.form.get('Tol')
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
-    decimales = find_round_n(float(tol),ErrorType)
     resultado = ReglaFalsa(float(Xi),float(Xf),float(tol),float(Niter),func,ErrorType)
     return jsonify(resultado)
 
@@ -66,7 +63,6 @@ def FijoPunto():
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
     g = request.form.get('g')
-    decimales = find_round_n(float(tol),ErrorType)
     resultado = PuntoFijo(func,float(tol),float(Niter),float(X0),g,ErrorType)
     return jsonify(resultado)
 
@@ -78,7 +74,6 @@ def tonnew():
     df = request.form.get('df')
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
-    decimales = find_round_n(float(tol),ErrorType)
     resultado = Newton(func,df,float(tol),float(Niter),float(X0),ErrorType)
     return jsonify(resultado)
 
@@ -90,7 +85,6 @@ def multiplesraices1():
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
     m = request.form.get('m')
-    decimales = find_round_n(float(tol),ErrorType)
     resultado = RaicesMultiples1(func,float(tol),float(Niter),float(X0),m,ErrorType)
     return jsonify(resultado)
 
@@ -101,7 +95,6 @@ def multiplesraices2():
     tol = request.form.get('Tol')
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
-    decimales = find_round_n(float(tol),ErrorType)
     resultado = RaicesMultiples2(func,float(tol),float(Niter),float(X0),ErrorType)
     return jsonify(resultado)
 
@@ -115,7 +108,6 @@ def Sorrelajacion():
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
     # Convertir a lista y asegurarte de que 'tol' y 'Niter' sean del tipo correcto
-    decimales = find_round_n(float(tol), ErrorType)
     resultado = SOR(np.array(eval(x0)), np.array(eval(A)), np.array(eval(b)), float(w), float(tol), int(Niter), ErrorType)
     # Convertir el resultado a una lista si es un ndarray
     if isinstance(resultado, np.ndarray):
@@ -132,7 +124,6 @@ def SeidelGauss():
     ErrorType = request.form.get('ErrorType')
     w = 1
     # Convertir a lista y asegurarte de que 'tol' y 'Niter' sean del tipo correcto
-    decimales = find_round_n(float(tol), ErrorType)
     resultado = SOR(np.array(eval(x0)), np.array(eval(A)), np.array(eval(b)), float(w), float(tol), int(Niter), ErrorType)
     # Convertir el resultado a una lista si es un ndarray
     if isinstance(resultado, np.ndarray):
@@ -148,7 +139,6 @@ def JacobiMat():
     Niter = request.form.get('Niter')
     ErrorType = request.form.get('ErrorType')
     # Convertir a lista y asegurarte de que 'tol' y 'Niter' sean del tipo correcto
-    decimales = find_round_n(float(tol), ErrorType)
     resultado = MatJacobi(np.array(eval(x0)), np.array(eval(A)), np.array(eval(b)), float(tol), int(Niter), ErrorType)
     # Convertir el resultado a una lista si es un ndarray
     if isinstance(resultado, np.ndarray):
@@ -169,7 +159,7 @@ def grangela():
     resultado = lagrange_interpolation(np.array(eval(x_data)), np.array(eval(y_data)))
     return jsonify(resultado)
 
-@app.route("/NewtonInter", methods=['POST'])
+@app.route("/NewtonInterpolante", methods=['POST'])
 def interpolationnewton():
     x_data = request.form.get('x_data')
     y_data = request.form.get('y_data')
@@ -182,6 +172,7 @@ def nespli():
     y_data = request.form.get('y_data')
     degree = request.form.get('degree')
     resultado = spline_interpolation(np.array(eval(x_data)), np.array(eval(y_data)), float(degree))
+    print(resultado)
     return jsonify(resultado)
 
 if __name__ == '__main__':

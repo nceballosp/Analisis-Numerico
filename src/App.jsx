@@ -45,13 +45,13 @@ function App({type}) {
   return (
     <>
       <div className="content">
-      <Form imprTabla={handleData} imprGraph={graphFunction} tipo={type} setMethod={getMethod}/>
-      <div id="resultados">
-        {datos && <Tabla datos={datos} tipo={type} metodo={metodo} graph={graphFunction}/>}
-      </div>
-      <Instrucciones/>
-      </div>        
-      <div className="ggb-element" ref={appletref}></div>
+        <Form imprTabla={handleData} imprGraph={graphFunction} tipo={type} setMethod={getMethod}/>
+        <div id="resultados">
+          {datos && <Tabla datos={datos} tipo={type} metodo={metodo} graph={graphFunction}/>}
+        </div>
+          <Instrucciones tipo={type}/>
+        </div>        
+        <div className="ggb-element" ref={appletref}></div>
     </>
   )
 }

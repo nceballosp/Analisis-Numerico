@@ -136,7 +136,7 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
       
       {eleccion === 'Newton' &&
       <>
-      <label htmlFor="df">Df</label>
+      <label htmlFor="df">Derivada f</label>
       <input autoComplete='OFF' type="text" name='df' id='df' placeholder='df' />
       </>
       }

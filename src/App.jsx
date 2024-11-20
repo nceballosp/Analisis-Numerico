@@ -8,7 +8,10 @@ import Instrucciones from './Instrucciones';
 function App({type}) {
   const appletref = useRef(null);
   const [datos,setDatos] = useState(null);
-
+  const [metodo,setMetodo] = useState(null);
+  const getMethod = (method) =>{
+    setMetodo(method);
+  }
   const handleData = (respuesta) => {
     setDatos(respuesta);
   };
@@ -16,9 +19,9 @@ function App({type}) {
   const params = {"appName": "graphing", "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true,"scaleContainerClass":"ggb-element" };
   const applet = new GGBApplet(params, true);
   
-  // window.addEventListener("load", function() {
-  //     applet.inject(appletref.current);
-  // });
+  window.addEventListener("load", function() {
+      applet.inject(appletref.current);
+  });
 
   useEffect(() => {
     if (appletref.current) {
@@ -42,9 +45,9 @@ function App({type}) {
   return (
     <>
       <div className="content">
-      <Form imprTabla={handleData} imprGraph={graphFunction} tipo={type} />
+      <Form imprTabla={handleData} imprGraph={graphFunction} tipo={type} setMethod={getMethod}/>
       <div id="resultados">
-        {datos && <Tabla datos={datos} tipo={type}/>}
+        {datos && <Tabla datos={datos} tipo={type} metodo={metodo}/>}
       </div>
       <Instrucciones/>
       </div>        

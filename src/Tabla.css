@@ -31,3 +31,11 @@ tr:nth-child(odd) td:nth-child(even){
 tr:nth-child(odd) td:nth-child(odd){
     background-color: #168AAD;
 }
+
+.radio{
+    margin-top: 1.2em;
+}
+
+p{
+    font-weight: bold;
+}

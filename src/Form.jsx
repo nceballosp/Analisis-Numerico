@@ -2,13 +2,15 @@ import React from 'react'
 import { useState,useEffect,useRef } from 'react'
 import './Form.css'
 
-function Form({imprTabla,imprGraph, tipo}) {
+function Form({imprTabla,imprGraph,setMethod, tipo}) {
 const funcref = useRef(null);
 const [eleccion,setEleccion] = useState('Biseccion');
 const formRef = useRef();
 const handleSubmit = () => {
   const datos = new FormData(formRef.current);
-  imprGraph(funcref.current.value);
+  if(tipo === 'NoLinear'){
+    imprGraph(funcref.current.value);
+  }
 fetch(`http://127.0.0.1:5000/${eleccion}`,{
   method: 'POST',
   body: datos
@@ -29,7 +31,9 @@ fetch(`http://127.0.0.1:5000/${eleccion}`,{
   return (
     <form action="" id='formulario' ref={formRef}>
     <label htmlFor="metodo">Seleccione el metodo a ejecutar</label>
-    <select name="metodo" id="metodo" onInput={()=>setEleccion(()=> metodo.value)} >
+    <select name="metodo" id="metodo" onChange={()=>{setEleccion(metodo.value);
+      setMethod(metodo.value);
+    }} >
 
       {tipo === 'NoLinear' &&
       <>

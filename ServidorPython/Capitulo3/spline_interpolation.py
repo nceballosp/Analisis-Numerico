@@ -3,9 +3,9 @@ import numpy.polynomial.polynomial as poly
 # d es 1, 2 o 3 para spline lineal, cuadrado o cubico
 def spline(x, y, d):
     if len(x) != len(y):
-        raise ValueError("x and y must be the same size")
+        return {'state':'Failed','message':"x and y must be the same size"}
     if len(x) != len(set(x)):
-        raise ValueError("The x vector has duplicated items; the input isn't a function")
+        return {'state':'Failed','message':"The x vector has duplicated items; the input isn't a function"}
     try:
         n = len(x)
         A = np.zeros(((d+1) * (n-1), (d+1) * (n-1)))
@@ -31,10 +31,10 @@ def spline(x, y, d):
             tabla = np.reshape(val, (n-1, d+1))    
             return {'state':'Exact','tabla':tabla.tolist()}
         
-        else: raise ValueError("Invalid 'd' option, choose 1 for linear, 2 for square and 3 for cubic")
+        else: return {'state':'Failed','message':"Invalid 'd' option, choose 1 for linear, 2 for square and 3 for cubic"}
         
     except np.linalg.LinAlgError as e:
-        raise ValueError("Error when trying to solve the system")
+        return {'state':'Failed','message':f"Error when trying to solve the system: {e}"}
 
 
 def construct_linear_spline(x, y, n, A, b):

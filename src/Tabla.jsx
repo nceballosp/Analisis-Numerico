@@ -2,6 +2,10 @@ import React from 'react'
 import './Tabla.css'
 
 function Tabla({datos,tipo,metodo,graph}) {
+  if(datos.state==='Failed' && datos.message){
+    alert(datos.message);
+    return
+  }
   let convergencia;
   if(datos.radioEsp < 1 ){
     convergencia = "El metodo converge";

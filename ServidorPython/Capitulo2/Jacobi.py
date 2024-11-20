@@ -25,6 +25,7 @@ def MatJacobi(x0, A, b, Tol, niter, error_type):
         T = np.linalg.inv(D) @ (L + U)
         C = np.linalg.inv(D) @ b
         x1 = T @ x0 + C
+        radioEsp = np.max(np.abs(np.linalg.eigvals(T)))
         
         # Calcular error absoluto o relativo
         if error_type == 'Abs':
@@ -49,11 +50,11 @@ def MatJacobi(x0, A, b, Tol, niter, error_type):
             tabla.append(tuple(fila))  # Convertir cada fila en tupla
 
         state = 'Aprox' 
-        return {'state': state, 'tabla': tabla}
+        return {'state': state, 'tabla': tabla, 'radioEsp':radioEsp}
     else:
         s = x0
         state = 'Failed'
-        return {'state': state, 'Niter': niter}
+        return {'state': state, 'Niter': niter, 'radioEsp':radioEsp}
 
 
 

@@ -2,17 +2,24 @@ import React from 'react'
 import './Tabla.css'
 
 function Tabla({datos,tipo,metodo}) {
+  let convergencia
+  if(datos.radioEsp < 1 ){
+    convergencia = "El metodo converge";
+  }
+  else{
+    convergencia = "El metodo no converge";
+  }
   let tabla;
   let headers;
   if ((datos.state === 'Exact' || datos.state === 'Aprox') && datos.tabla){
     tabla = datos.tabla.map((fila,filaindex)=><tr key={filaindex}>{fila.map((celda,celdaindex)=><td key={celdaindex}>{celda}</td>)}</tr>);
     if(tipo === 'Linear'){
-      let columnas = [<th key={0}>E</th>];
-      for(let i=0;i<datos.tabla[0]?.length-2||0;i++){
+      let columnas = [<th key={0}>n</th>];
+      for(let i=1;i<datos.tabla[0]?.length-1||0;i++){
         columnas.push(<th key={i+1}>X{i}</th>);
       };
       let ultkey = columnas.length;
-      columnas.push(<th key={ultkey+1}>N</th>);
+      columnas.push(<th key={ultkey+1}>E</th>);
       headers= <tr>{columnas}</tr>
     }
     // else if(tipo === 'Interpolacion' && metodo === 'NewtonInterpolante'){
@@ -59,6 +66,7 @@ function Tabla({datos,tipo,metodo}) {
     }
 
     {tipo === 'Linear' &&
+    <> 
       <table>
       <thead>
         {headers}
@@ -67,7 +75,14 @@ function Tabla({datos,tipo,metodo}) {
         {tabla}
       </tbody>
       </table>
-      
+      <div className='radio'>
+        <p>Radio Espectral:</p>
+        {datos.radioEsp}
+      </div>
+      <div className='convergencia'>
+        {convergencia}
+      </div>
+    </>
     }
 
     {(tipo === 'Interpolacion' && metodo === 'Vandermonde') &&

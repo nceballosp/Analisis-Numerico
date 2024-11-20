@@ -1,11 +1,12 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useLocation } from 'react-router-dom';
 
 const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'No Lineares', href: '/nolineares', current: false },
-  { name: 'Lineares', href: '/lineares', current: false },
-  { name: 'Interpolacion', href: 'interpolacion', current: false },
+  { name: 'Home', href: '/'},
+  { name: 'No Lineares', href: '/nolineares'},
+  { name: 'Lineares', href: '/lineares'},
+  { name: 'Interpolacion', href: '/interpolacion'},
 ]
 
 function classNames(...classes) {
@@ -30,17 +31,19 @@ export default function Navbar() {
     
               <div className="flex space-x-4 sm:justify-around w-{100%} ">
                 {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? 'page' : undefined}
-                    className={classNames(
-                      item.current ? 'bg-azul2 text-black  hover:bg-azul3': 'text-black hover:bg-azul3 hover:text-black',
-                      'rounded-md px-3 py-2 text-base font-medium',
-                    )}
-                  >
-                    {item.name}
-                  </a>
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className={classNames(
+                    location.pathname === item.href
+                      ? 'bg-azul5 text-black font-bold'
+                      : 'text-black font-bold hover:bg-azul3',
+                    'rounded-md px-3 py-2 text-base font-bold',
+                  )}
+                  aria-current={location.pathname === item.href ? 'page' : undefined}
+                >
+                  {item.name}
+                </a>
                 ))}
               </div>
           </div>
